@@ -3,103 +3,180 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Contact Camp Lanka — get in touch with our team for campsite recommendations, gear rental enquiries, or any questions about outdoor adventures in Sri Lanka." />
   <title>Contact – Camp Lanka</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="css/style.css" />
   <link rel="icon" href="favicon.png">
+  <!-- Phosphor Icons -->
   <script src="https://unpkg.com/@phosphor-icons/web"></script>
 </head>
 <body>
-  <header class="header">
+
+  <!-- ===== HEADER ===== -->
+  <header class="header" role="banner">
     <div class="container header__container">
-      <a href="index.html" class="logo">Camp Lanka</a>
-      <nav class="nav">
-        <ul class="nav__list">
-          <li><a href="index.html" class="nav__link">Home</a></li>
-          <li><a href="about.html" class="nav__link">About</a></li>
-          <li><a href="campsites.html" class="nav__link">Campsites</a></li>
-          <li><a href="gear.html" class="nav__link">Gear</a></li>
-          <li><a href="reviews.html" class="nav__link">Reviews</a></li>
-          <li><a href="contact.html" class="nav__link active">Contact</a></li>
+      <a href="index.html" class="logo" aria-label="Camp Lanka – Home">Camp Lanka</a>
+      <nav class="nav" role="navigation" aria-label="Main navigation">
+        <ul class="nav__list" id="nav-list" role="list">
+          <li role="listitem"><a href="index.html"      class="nav__link">Home</a></li>
+          <li role="listitem"><a href="about.html"      class="nav__link">About</a></li>
+          <li role="listitem"><a href="campsites.html"  class="nav__link">Campsites</a></li>
+          <li role="listitem"><a href="gear.html"       class="nav__link">Gear</a></li>
+          <li role="listitem"><a href="reviews.html"    class="nav__link">Reviews</a></li>
+          <li role="listitem"><a href="contact.html"    class="nav__link active" aria-current="page">Contact</a></li>
         </ul>
-        <button class="hamburger" aria-label="Menu"><i class="ph ph-list" style="font-size: 1.5rem;"></i></button>
+        <button class="hamburger" id="hamburger-btn" aria-label="Open navigation menu" aria-expanded="false" aria-controls="nav-list">
+          <i class="ph ph-list" aria-hidden="true" style="font-size:1.5rem;"></i>
+        </button>
       </nav>
     </div>
   </header>
 
-  <main style="padding-top: 5rem;">
-    <section class="section">
+  <main style="padding-top:5rem;">
+    <section class="section" aria-labelledby="contact-heading">
       <div class="container">
-        <h2 class="section__title">Get In Touch</h2>
+        <h1 class="section__title" id="contact-heading">Get In Touch</h1>
+
         <div class="contact-grid">
-          <div class="card">
-            <h3 style="margin-bottom: 1.5rem;">Send us a message</h3>
-            <form id="contactForm">
+
+          <!-- Contact Form -->
+          <div class="card" style="padding:2rem;">
+            <h2 style="margin-bottom:1.5rem;font-size:1.3rem;color:var(--color-primary);">Send us a message</h2>
+            <form id="contactForm" novalidate aria-label="Contact form">
+
               <div class="form-group">
-                <label for="name">Your Name</label>
-                <input type="text" id="name" class="form-control" placeholder="John Doe" />
+                <label for="name">Your Name <span aria-hidden="true" style="color:#e06c6c;">*</span></label>
+                <input
+                  type="text"
+                  id="name"
+                  name="name"
+                  class="form-control"
+                  placeholder="John Doe"
+                  autocomplete="name"
+                  required
+                  aria-required="true"
+                />
               </div>
+
               <div class="form-group">
-                <label for="email">Email Address</label>
-                <input type="email" id="email" class="form-control" placeholder="john@example.com" />
+                <label for="email">Email Address <span aria-hidden="true" style="color:#e06c6c;">*</span></label>
+                <input
+                  type="email"
+                  id="email"
+                  name="email"
+                  class="form-control"
+                  placeholder="john@example.com"
+                  autocomplete="email"
+                  required
+                  aria-required="true"
+                />
               </div>
+
               <div class="form-group">
-                <label for="message">Message</label>
-                <textarea id="message" class="form-control" placeholder="How can we help you?"></textarea>
+                <label for="message">Message <span aria-hidden="true" style="color:#e06c6c;">*</span></label>
+                <textarea
+                  id="message"
+                  name="message"
+                  class="form-control"
+                  placeholder="How can we help you?"
+                  required
+                  aria-required="true"
+                ></textarea>
               </div>
-              <button type="submit" class="btn btn--primary" style="width:100%;">Send Message</button>
+
+              <button type="submit" class="btn btn--primary" style="width:100%;">
+                <i class="ph ph-paper-plane-tilt" aria-hidden="true" style="margin-right:0.4rem;"></i>
+                Send Message
+              </button>
             </form>
           </div>
-          <div class="contact-details">
+
+          <!-- Contact Details -->
+          <div class="contact-details" aria-label="Contact information">
+
             <div class="item">
-              <span class="icon-placeholder" data-icon=""></span>
-              <div><h4>Our Office</h4><p>123 Adventure Lane, Colombo 03, Sri Lanka</p></div>
-            </div>
-            <div class="item">
-              <span class="icon-placeholder" data-icon=""></span>
-              <div><h4>Phone</h4><p>+94 11 234 5678</p><p style="font-size:0.9rem;">Mon‑Fri 9am – 6pm</p></div>
-            </div>
-            <div class="item">
-              <span class="icon-placeholder" data-icon=""></span>
-              <div><h4>Email</h4><p>hello@camplanka.lk</p></div>
-            </div>
-            <div>
-              <h4 style="margin-bottom:0.5rem;">Follow Us</h4>
-              <div class="social">
-                <a href="#" aria-label="Facebook"><span class="icon-placeholder" data-icon="facebook"></span></a>
-                <a href="#" aria-label="Instagram"><span class="icon-placeholder" data-icon="instagram"></span></a>
-                <a href="#" aria-label="Twitter"><span class="icon-placeholder" data-icon="twitter"></span></a>
-                <a href="#" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
+              <i class="ph ph-map-pin" aria-hidden="true"></i>
+              <div>
+                <h3>Our Office</h3>
+                <p>123 Adventure Lane, Colombo 03, Sri Lanka</p>
               </div>
             </div>
+
+            <div class="item">
+              <i class="ph ph-phone" aria-hidden="true"></i>
+              <div>
+                <h3>Phone</h3>
+                <p><a href="tel:+94112345678" style="color:var(--color-text-light);">+94 11 234 5678</a></p>
+                <p style="font-size:0.9rem;color:var(--color-text-light);">Mon–Fri 9am – 6pm</p>
+              </div>
+            </div>
+
+            <div class="item">
+              <i class="ph ph-envelope" aria-hidden="true"></i>
+              <div>
+                <h3>Email</h3>
+                <p><a href="mailto:hello@camplanka.lk" style="color:var(--color-text-light);">hello@camplanka.lk</a></p>
+              </div>
+            </div>
+
+            <div>
+              <h3 style="margin-bottom:0.75rem;color:var(--color-primary);">Follow Us</h3>
+              <div class="social">
+                <a href="#" aria-label="Visit our Facebook page">
+                  <i class="ph-fill ph-facebook-logo" style="font-size:1.2rem;" aria-hidden="true"></i>
+                </a>
+                <a href="#" aria-label="Visit our Instagram page">
+                  <i class="ph-fill ph-instagram-logo" style="font-size:1.2rem;" aria-hidden="true"></i>
+                </a>
+                <a href="#" aria-label="Visit our X (Twitter) page">
+                  <i class="ph-fill ph-x-logo" style="font-size:1.2rem;" aria-hidden="true"></i>
+                </a>
+                <a href="#" aria-label="Visit our YouTube channel">
+                  <i class="ph-fill ph-youtube-logo" style="font-size:1.2rem;" aria-hidden="true"></i>
+                </a>
+              </div>
+            </div>
+
           </div>
         </div>
       </div>
     </section>
   </main>
 
-  <footer class="footer">
+  <!-- ===== FOOTER ===== -->
+  <footer class="footer" role="contentinfo">
     <div class="container">
       <div class="footer__grid">
-        <div class="footer__col"><h3>Camp Lanka</h3><p>Your ultimate guide to outdoor adventures and camping in Sri Lanka.</p></div>
+        <div class="footer__col">
+          <h3>Camp Lanka</h3>
+          <p>Your ultimate guide to outdoor adventures and camping in Sri Lanka.</p>
+        </div>
         <div class="footer__col">
           <h4>Quick Links</h4>
-          <ul><li><a href="about.html">About Us</a></li><li><a href="campsites.html">Campsites</a></li><li><a href="gear.html">Gear Rental</a></li><li><a href="contact.html">Contact</a></li></ul>
+          <ul>
+            <li><a href="about.html">About Us</a></li>
+            <li><a href="campsites.html">Campsites</a></li>
+            <li><a href="gear.html">Gear Rental</a></li>
+            <li><a href="contact.html">Contact</a></li>
+          </ul>
         </div>
         <div class="footer__col">
           <h4>Connect</h4>
           <div class="social">
-            <a href="#" aria-label="Facebook"><i class="ph-fill ph-facebook-logo" style="font-size: 1.2rem;"></i></a>
-            <a href="#" aria-label="Instagram"><i class="ph-fill ph-instagram-logo" style="font-size: 1.2rem;"></i></a>
-            <a href="#" aria-label="Twitter"><i class="ph-fill ph-x-logo" style="font-size: 1.2rem;"></i></a>
+            <a href="#" aria-label="Visit our Facebook page"><i class="ph-fill ph-facebook-logo" style="font-size:1.2rem;" aria-hidden="true"></i></a>
+            <a href="#" aria-label="Visit our Instagram page"><i class="ph-fill ph-instagram-logo" style="font-size:1.2rem;" aria-hidden="true"></i></a>
+            <a href="#" aria-label="Visit our X (Twitter) page"><i class="ph-fill ph-x-logo" style="font-size:1.2rem;" aria-hidden="true"></i></a>
+            <a href="#" aria-label="Visit our YouTube channel"><i class="ph-fill ph-youtube-logo" style="font-size:1.2rem;" aria-hidden="true"></i></a>
           </div>
         </div>
       </div>
       <div class="footer__bottom"><p>&copy; 2026 Camp Lanka. All rights reserved.</p></div>
     </div>
   </footer>
+
   <script src="js/script.js"></script>
 </body>
 </html>

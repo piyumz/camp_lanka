@@ -1,172 +1,541 @@
-// script.js
-document.addEventListener('DOMContentLoaded', () => {
-  // ----- Mobile menu toggle -----
-  const hamburger = document.querySelector('.hamburger');
-  const navList = document.querySelector('.nav__list');
-  if (hamburger && navList) {
-    hamburger.addEventListener('click', () => {
-      navList.classList.toggle('active');
-      hamburger.innerHTML = navList.classList.contains('active')
-        ? '<i class="fas fa-times"></i>'
-        : '<i class="fas fa-bars"></i>';
+/**
+ * Camp Lanka — Main JavaScript
+ * Handles: Navigation, Search, Filters, Carousel, Forms, Modals
+ */
+
+/* ============================================================
+   UTILITY HELPERS
+   ============================================================ */
+
+/**
+ * Shorthand querySelector
+ * @param {string} selector
+ * @param {Element} [ctx=document]
+ */
+const $ = (selector, ctx = document) => ctx.querySelector(selector);
+
+/**
+ * Shorthand querySelectorAll
+ * @param {string} selector
+ * @param {Element} [ctx=document]
+ */
+const $$ = (selector, ctx = document) => ctx.querySelectorAll(selector);
+
+/**
+ * Show a toast notification to replace alert()
+ * @param {string} message
+ * @param {'success'|'error'} [type='success']
+ */
+function showToast(message, type = 'success') {
+  // Remove any existing toast
+  const existing = $('#cl-toast');
+  if (existing) existing.remove();
+
+  const toast = document.createElement('div');
+  toast.id = 'cl-toast';
+  toast.className = `cl-toast cl-toast--${type}`;
+  toast.setAttribute('role', 'alert');
+  toast.setAttribute('aria-live', 'assertive');
+  toast.innerHTML = `
+    <i class="ph-fill ${type === 'success' ? 'ph-check-circle' : 'ph-x-circle'}"></i>
+    <span>${message}</span>
+    <button class="cl-toast__close" aria-label="Close notification">
+      <i class="ph ph-x"></i>
+    </button>
+  `;
+
+  document.body.appendChild(toast);
+
+  // Animate in
+  requestAnimationFrame(() => toast.classList.add('cl-toast--visible'));
+
+  // Auto-dismiss after 4 s
+  const timer = setTimeout(() => dismissToast(toast), 4000);
+
+  // Manual close
+  toast.querySelector('.cl-toast__close').addEventListener('click', () => {
+    clearTimeout(timer);
+    dismissToast(toast);
+  });
+}
+
+/**
+ * Animate toast out and remove it
+ * @param {HTMLElement} toast
+ */
+function dismissToast(toast) {
+  toast.classList.remove('cl-toast--visible');
+  toast.addEventListener('transitionend', () => toast.remove(), { once: true });
+}
+
+/* ============================================================
+   NAVIGATION — Hamburger Menu
+   ============================================================ */
+
+/**
+ * Initialise the mobile hamburger menu with:
+ * - Smooth CSS-driven open/close animation
+ * - Close on outside click
+ * - Close on nav link click
+ * - Close when resized to desktop (≥ 769 px)
+ * - Body scroll lock while open
+ * - Proper aria-expanded state
+ */
+function initNavigation() {
+  const hamburger = $('.hamburger');
+  const navList = $('.nav__list');
+  const nav = $('.nav');
+
+  if (!hamburger || !navList) return;
+
+  /** Toggle open/closed state */
+  function openMenu() {
+    navList.classList.add('active');
+    hamburger.setAttribute('aria-expanded', 'true');
+    hamburger.innerHTML = '<i class="ph ph-x" aria-hidden="true" style="font-size:1.5rem;"></i>';
+    document.body.classList.add('menu-open');
+  }
+
+  function closeMenu() {
+    navList.classList.remove('active');
+    hamburger.setAttribute('aria-expanded', 'false');
+    hamburger.innerHTML = '<i class="ph ph-list" aria-hidden="true" style="font-size:1.5rem;"></i>';
+    document.body.classList.remove('menu-open');
+  }
+
+  function isMenuOpen() {
+    return navList.classList.contains('active');
+  }
+
+  // Hamburger click
+  hamburger.addEventListener('click', (e) => {
+    e.stopPropagation();
+    isMenuOpen() ? closeMenu() : openMenu();
+  });
+
+  // Close when a nav link is clicked
+  $$('.nav__link', navList).forEach(link => {
+    link.addEventListener('click', () => closeMenu());
+  });
+
+  // Close on outside click (document level)
+  document.addEventListener('click', (e) => {
+    if (isMenuOpen() && !nav.contains(e.target)) {
+      closeMenu();
+    }
+  });
+
+  // Close when resized to desktop breakpoint
+  const mql = window.matchMedia('(min-width: 769px)');
+  mql.addEventListener('change', (e) => {
+    if (e.matches && isMenuOpen()) closeMenu();
+  });
+
+  // Support Escape key
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && isMenuOpen()) {
+      closeMenu();
+      hamburger.focus();
+    }
+  });
+}
+
+/* ============================================================
+   CAMPSITE DATA
+   Used for search on both index.html and campsites.html
+   ============================================================ */
+
+const CAMPSITE_DATA = [
+  {
+    id: 'great-western',
+    name: 'Great Western Mountain',
+    district: 'nuwara-eliya',
+    location: 'Nuwara Eliya',
+    category: 'Mountain',
+    difficulty: 'Hard',
+    rating: 4.7,
+    season: 'Jan – Mar',
+    desc: 'The 8th highest mountain offering a steep incline and challenging trail.',
+    img: 'images/distict/Nuwara Eliya/Great Western Mountain.jpg'
+  },
+  {
+    id: 'bambaragala',
+    name: 'Bambaragala',
+    district: 'badulla',
+    location: 'Badulla',
+    category: 'Adventure',
+    difficulty: 'Hard',
+    rating: 4.5,
+    season: 'Dec – Apr',
+    desc: 'Features a sharp cliff edge offering clear vistas of nearby mountains.',
+    img: 'images/distict/Badulla/bambaragala.jpg'
+  },
+  {
+    id: 'narangala',
+    name: 'Narangala Mountain',
+    district: 'badulla',
+    location: 'Badulla',
+    category: 'Mountain',
+    difficulty: 'Moderate',
+    rating: 4.9,
+    season: 'Feb – Jul',
+    desc: 'Pure magic with a sea of clouds and a killer 360-degree sunrise.',
+    img: 'images/distict/Badulla/Narangala Mountain.jpg'
+  },
+  {
+    id: 'haritha-kanda',
+    name: 'Haritha Kanda',
+    district: 'badulla',
+    location: 'Badulla',
+    category: 'Family',
+    difficulty: 'Easy',
+    rating: 4.8,
+    season: 'Jan – May',
+    desc: 'Scenic rocky mountain celebrated for its lush pastures and misty landscapes.',
+    img: 'images/distict/Badulla/haritha kanda.jpg'
+  },
+  {
+    id: 'hanthana',
+    name: 'Hanthana',
+    district: 'kandy',
+    location: 'Kandy',
+    category: 'Mountain',
+    difficulty: 'Moderate',
+    rating: 4.6,
+    season: 'Dec – Apr',
+    desc: 'Set up base camps on open rocky plateaus near the summits.',
+    img: 'images/distict/kandy/Hanthana.jpg'
+  },
+  {
+    id: 'meemure',
+    name: 'Meemure Village',
+    district: 'kandy',
+    location: 'Kandy',
+    category: 'Forest',
+    difficulty: 'Easy',
+    rating: 4.9,
+    season: 'Jan – Apr',
+    desc: 'Serene camping amidst towering pine trees with crisp mountain air.',
+    img: 'images/distict/kandy/meemure.webp'
+  }
+];
+
+/* ============================================================
+   HERO SEARCH (index.html)
+   Reads the destination input, category & difficulty selects,
+   then navigates to campsites.html with query parameters.
+   ============================================================ */
+
+function initHeroSearch() {
+  const form = $('#heroSearchForm');
+  const searchBtn = $('#heroSearchBtn');
+  const destInput = $('#searchDestination');
+
+  if (!searchBtn || !destInput) return;
+
+  function doSearch() {
+    const dest = destInput.value.trim();
+    const cat = $('#searchCategory')?.value || '';
+    const diff = $('#searchDifficulty')?.value || '';
+
+    const params = new URLSearchParams();
+    if (dest) params.set('q', dest);
+    if (cat && cat !== 'Any type') params.set('category', cat);
+    if (diff && diff !== 'Easy') params.set('difficulty', diff);
+
+    window.location.href = 'campsites.html' + (params.toString() ? '?' + params.toString() : '');
+  }
+
+  searchBtn.addEventListener('click', doSearch);
+
+  // Allow Enter key in destination input
+  destInput.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter') doSearch();
+  });
+}
+
+/* ============================================================
+   CAMPSITE SEARCH + FILTER (campsites.html)
+   Real-time filtering by search text and district filter buttons.
+   Shows a "No campsites found" empty state when nothing matches.
+   ============================================================ */
+
+function initCampsiteSearch() {
+  const grid = $('#campsite-grid');
+  const searchInput = $('#campsiteSearch');
+  const clearBtn = $('#campsiteSearchClear');
+  const emptyState = $('#campsiteEmpty');
+  const filterBtns = $$('.filter-btn');
+  const cards = $$('.camp-card', grid);
+
+  if (!grid || !searchInput) return;
+
+  let activeDistrict = 'all';
+
+  /** Apply both district filter + text search at once */
+  function applyFilters() {
+    const query = searchInput.value.trim().toLowerCase();
+
+    // Show/hide clear button
+    if (clearBtn) clearBtn.style.display = query ? 'flex' : 'none';
+
+    let visibleCount = 0;
+
+    cards.forEach(card => {
+      const district = card.dataset.district || '';
+      const name = (card.dataset.name || '').toLowerCase();
+      const desc = (card.querySelector('.camp-desc')?.textContent || '').toLowerCase();
+      const location = (card.querySelector('.camp-card-meta span')?.textContent || '').toLowerCase();
+      const category = (card.dataset.category || '').toLowerCase();
+
+      // District filter
+      const districtMatch = activeDistrict === 'all' || district === activeDistrict;
+      // Text search — case-insensitive, matches name, desc, location, category
+      const textMatch = !query || name.includes(query) || desc.includes(query) ||
+                        location.includes(query) || category.includes(query);
+
+      const show = districtMatch && textMatch;
+      card.style.display = show ? '' : 'none';
+      // Add/remove animation class
+      if (show) {
+        card.classList.add('card-visible');
+        visibleCount++;
+      } else {
+        card.classList.remove('card-visible');
+      }
+    });
+
+    // Show empty state
+    if (emptyState) {
+      emptyState.style.display = visibleCount === 0 ? 'block' : 'none';
+    }
+  }
+
+  // Real-time search input
+  searchInput.addEventListener('input', applyFilters);
+
+  // Clear search
+  if (clearBtn) {
+    clearBtn.addEventListener('click', () => {
+      searchInput.value = '';
+      applyFilters();
+      searchInput.focus();
     });
   }
 
-  // ----- Smooth scroll for anchor links -----
-  document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-    anchor.addEventListener('click', function (e) {
-      e.preventDefault();
-      const target = document.querySelector(this.getAttribute('href'));
-      if (target) target.scrollIntoView({ behavior: 'smooth' });
+  // District filter buttons
+  filterBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      filterBtns.forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      activeDistrict = btn.dataset.filter;
+      applyFilters();
     });
   });
 
-  // ----- Campsite filter (campsites.html) -----
-  const filterBtns = document.querySelectorAll('.filter-btn');
-  const campsiteCards = document.querySelectorAll('.campsite-card');
-  if (filterBtns.length && campsiteCards.length) {
-    filterBtns.forEach(btn => {
-      btn.addEventListener('click', () => {
-        filterBtns.forEach(b => b.classList.remove('active'));
-        btn.classList.add('active');
-        const filter = btn.dataset.filter;
-        campsiteCards.forEach(card => {
-          if (filter === 'all' || card.dataset.district === filter) {
-            card.style.display = 'block';
-          } else {
-            card.style.display = 'none';
-          }
-        });
-      });
+  // Handle URL query params (from hero search on index.html)
+  const params = new URLSearchParams(window.location.search);
+  const q = params.get('q');
+  const cat = params.get('category');
+  const diff = params.get('difficulty');
+
+  if (q) {
+    searchInput.value = q;
+  }
+
+  // Apply on load (handles URL params)
+  applyFilters();
+}
+
+/* ============================================================
+   NEARBY GEAR LINKING (campsites.html)
+   ============================================================ */
+
+const GEAR_DB = {
+  'nuwara-eliya': [
+    { name: 'Thermal Sleeping Bag', type: 'Rent', price: 'Rs. 1,500/day', img: 'images/Gear/Thermal Sleeping Bag.jpg', desc: 'Sub-zero rated.' },
+    { name: 'Alpine Tent (2P)', type: 'Rent', price: 'Rs. 3,000/day', img: 'images/Gear/4-Person Dome Tent.jpg', desc: 'Wind & rain resistant.' }
+  ],
+  'kandy': [
+    { name: 'Standard Tent', type: 'Rent', price: 'Rs. 2,000/day', img: 'images/Gear/4-Person Dome Tent.jpg', desc: 'Good for mild weather.' },
+    { name: 'Portable Stove', type: 'Rent/Buy', price: 'Rs. 500/day', img: 'images/Gear/Portable Gas Stove.jpg', desc: 'Compact gas stove.' }
+  ],
+  'yala': [
+    { name: 'Safari Chair', type: 'Rent', price: 'Rs. 800/day', img: 'images/Gear/Foldable Camping Chair.jpg', desc: 'Comfortable foldable.' },
+    { name: 'Cooler Box', type: 'Rent', price: 'Rs. 600/day', img: 'images/Gear/LED Camping Lantern.jpg', desc: 'Keeps drinks cold.' }
+  ],
+  'badulla': [
+    { name: 'Hiking Poles', type: 'Rent', price: 'Rs. 400/day', img: 'images/Gear/65L Trekking Backpack.jpg', desc: 'Lightweight and sturdy.' },
+    { name: 'Headlamp', type: 'Buy', price: 'Rs. 2,500', img: 'images/Gear/LED Camping Lantern.jpg', desc: 'Ultra-bright LED.' }
+  ]
+};
+
+const DEFAULT_GEAR = [
+  { name: 'Basic Headlamp', type: 'Buy', price: 'Rs. 2,500', img: 'images/Gear/LED Camping Lantern.jpg', desc: 'Essential for any trip.' },
+  { name: 'Camping Chair', type: 'Rent', price: 'Rs. 800/day', img: 'images/Gear/Foldable Camping Chair.jpg', desc: 'Foldable and lightweight.' }
+];
+
+function initNearbyGear() {
+  const gearContainer = $('#gearPlaceholders');
+  const cards = $$('.camp-card');
+
+  if (!cards.length || !gearContainer) return;
+
+  cards.forEach(card => {
+    card.addEventListener('click', function () {
+      const district = this.dataset.district;
+      const items = GEAR_DB[district] || DEFAULT_GEAR;
+
+      const html = items.map(item => `
+        <div class="nearby__gear-item">
+          <img src="${item.img}" alt="${item.name}" loading="lazy" width="80" height="80" />
+          <div class="nearby__gear-info">
+            <h4>${item.name}</h4>
+            <p>${item.desc}</p>
+            <span class="badge badge--rent">${item.type}</span>
+            <div class="price">${item.price}</div>
+          </div>
+        </div>
+      `).join('');
+
+      gearContainer.innerHTML = html;
+      document.querySelector('.nearby')?.scrollIntoView({ behavior: 'smooth' });
+    });
+  });
+}
+
+/* ============================================================
+   REVIEWS CAROUSEL
+   ============================================================ */
+
+function initCarousel() {
+  const track = $('.carousel-track');
+  const slides = $$('.review-slide');
+  const prevBtn = $('.carousel-btn.prev');
+  const nextBtn = $('.carousel-btn.next');
+  const dotsContainer = $('.carousel-dots');
+
+  if (!track || !slides.length) return;
+
+  let current = 0;
+  const total = slides.length;
+
+  /** Build dot indicators */
+  function buildDots() {
+    if (!dotsContainer) return;
+    dotsContainer.innerHTML = '';
+    slides.forEach((_, i) => {
+      const dot = document.createElement('button');
+      dot.className = 'carousel-dot' + (i === 0 ? ' active' : '');
+      dot.setAttribute('aria-label', `Go to review ${i + 1}`);
+      dot.addEventListener('click', () => goTo(i));
+      dotsContainer.appendChild(dot);
     });
   }
 
-  // ----- Nearby gear linking (campsites.html) -----
-  const gearContainer = document.getElementById('gearPlaceholders');
-  const campsiteCardsForGear = document.querySelectorAll('.campsite-card');
-
-  const gearDB = {
-    'nuwara-eliya': [
-      { name: 'Thermal Sleeping Bag', type: 'Rent', price: 'Rs. 1500/day', img: 'images/Gear/Thermal Sleeping Bag.jpg', desc: 'Sub-zero rated.' },
-      { name: 'Alpine Tent (2P)', type: 'Rent', price: 'Rs. 3000/day', img: 'https://images.unsplash.com/photo-1523987355523-c7b5b0dd90a7?q=80&w=2070&auto=format&fit=crop', desc: 'Wind & rain resistant.' }
-    ],
-    'kandy': [
-      { name: 'Standard Tent', type: 'Rent', price: 'Rs. 2000/day', img: 'https://images.unsplash.com/photo-1504280741562-60234e07e12b?q=80&w=2070&auto=format&fit=crop', desc: 'Good for mild weather.' },
-      { name: 'Portable Stove', type: 'Rent/Buy', price: 'Rs. 500/day', img: 'https://images.unsplash.com/photo-1534062031174-5c92c89280d0?q=80&w=2080&auto=format&fit=crop', desc: 'Compact gas stove.' }
-    ],
-    'yala': [
-      { name: 'Safari Chair', type: 'Rent', price: 'Rs. 800/day', img: 'https://images.unsplash.com/photo-1595237731998-63cb5f106f36?q=80&w=2070&auto=format&fit=crop', desc: 'Comfortable foldable.' },
-      { name: 'Cooler Box', type: 'Rent', price: 'Rs. 600/day', img: 'https://images.unsplash.com/photo-1556909172-54557c7e4fb7?q=80&w=2070&auto=format&fit=crop', desc: 'Keeps drinks cold.' }
-    ],
-    'badulla': [
-      { name: 'Hiking Poles', type: 'Rent', price: 'Rs. 400/day', img: 'https://images.unsplash.com/photo-1534062031174-5c92c89280d0?q=80&w=2080&auto=format&fit=crop', desc: 'Lightweight and sturdy.' },
-      { name: 'Headlamp', type: 'Buy', price: 'Rs. 2500', img: 'https://images.unsplash.com/photo-1522008342704-6b265b543c46?q=80&w=2070&auto=format&fit=crop', desc: 'Ultra-bright LED.' }
-    ]
-  };
-  const defaultGear = [
-    { name: 'Basic Headlamp', type: 'Buy', price: 'Rs. 2500', img: 'https://images.unsplash.com/photo-1522008342704-6b265b543c46?q=80&w=2070&auto=format&fit=crop', desc: 'Essential for any trip.' },
-    { name: 'Camping Chair', type: 'Rent', price: 'Rs. 800/day', img: 'https://images.unsplash.com/photo-1595237731998-63cb5f106f36?q=80&w=2070&auto=format&fit=crop', desc: 'Foldable and lightweight.' }
-  ];
-
-  if (campsiteCardsForGear.length && gearContainer) {
-    campsiteCardsForGear.forEach(card => {
-      card.addEventListener('click', function() {
-        const district = this.dataset.district;
-        const items = gearDB[district] || defaultGear;
-        let html = '';
-        items.forEach(item => {
-          html += `
-            <div class="nearby__gear-item">
-              <img src="${item.img}" alt="${item.name}" loading="lazy" />
-              <div class="nearby__gear-info">
-                <h4>${item.name}</h4>
-                <p>${item.desc}</p>
-                <span class="badge badge--rent">${item.type}</span>
-                <div class="price">${item.price}</div>
-              </div>
-            </div>
-          `;
-        });
-        gearContainer.innerHTML = html;
-        // smooth scroll to nearby section
-        document.querySelector('.nearby')?.scrollIntoView({ behavior: 'smooth' });
-      });
+  function updateDots() {
+    $$('.carousel-dot', dotsContainer).forEach((dot, i) => {
+      dot.classList.toggle('active', i === current);
     });
   }
 
-  // ----- Reviews carousel -----
-  const track = document.querySelector('.carousel-track');
-  const slides = document.querySelectorAll('.review-slide');
-  const prevBtn = document.querySelector('.carousel-btn.prev');
-  const nextBtn = document.querySelector('.carousel-btn.next');
-  if (track && slides.length) {
-    let current = 0;
-    const total = slides.length;
-    const updateCarousel = () => {
-      track.style.transform = `translateX(-${current * 100}%)`;
-    };
-    nextBtn.addEventListener('click', () => {
-      current = (current + 1) % total;
-      updateCarousel();
-    });
-    prevBtn.addEventListener('click', () => {
-      current = (current - 1 + total) % total;
-      updateCarousel();
+  /** Move to a specific slide index */
+  function goTo(index) {
+    current = (index + total) % total;
+    track.style.transform = `translateX(-${current * 100}%)`;
+    updateDots();
+  }
+
+  if (prevBtn) prevBtn.addEventListener('click', () => goTo(current - 1));
+  if (nextBtn) nextBtn.addEventListener('click', () => goTo(current + 1));
+
+  // Auto-advance every 5 s
+  let autoTimer = setInterval(() => goTo(current + 1), 5000);
+
+  // Pause on hover
+  const wrapper = $('.carousel-wrapper');
+  if (wrapper) {
+    wrapper.addEventListener('mouseenter', () => clearInterval(autoTimer));
+    wrapper.addEventListener('mouseleave', () => {
+      autoTimer = setInterval(() => goTo(current + 1), 5000);
     });
   }
 
-  // ----- Contact form validation -----
-  const contactForm = document.getElementById('contactForm');
-  if (contactForm) {
-    contactForm.addEventListener('submit', function(e) {
-      e.preventDefault();
-      const name = document.getElementById('name')?.value.trim();
-      const email = document.getElementById('email')?.value.trim();
-      const message = document.getElementById('message')?.value.trim();
-      if (!name || !email || !message) {
-        alert('Please fill in all fields.');
-      } else {
-        alert('Thank you for your message! We’ll get back to you soon.');
-        this.reset();
-      }
-    });
-  }
+  buildDots();
+}
 
-  // ----- Clickable cards (homepage) -----
-  document.querySelectorAll('.card--clickable').forEach(card => {
-    card.addEventListener('click', function() {
+/* ============================================================
+   CONTACT FORM VALIDATION
+   ============================================================ */
+
+function initContactForm() {
+  const form = $('#contactForm');
+  if (!form) return;
+
+  form.addEventListener('submit', (e) => {
+    e.preventDefault();
+
+    const name = $('#name')?.value.trim();
+    const email = $('#email')?.value.trim();
+    const message = $('#message')?.value.trim();
+    const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+    if (!name || !email || !message) {
+      showToast('Please fill in all required fields.', 'error');
+      return;
+    }
+    if (!emailPattern.test(email)) {
+      showToast('Please enter a valid email address.', 'error');
+      return;
+    }
+
+    showToast('Thank you for your message! We\'ll get back to you soon.', 'success');
+    form.reset();
+  });
+}
+
+/* ============================================================
+   CLICKABLE CARDS
+   ============================================================ */
+
+function initClickableCards() {
+  $$('.card--clickable').forEach(card => {
+    card.addEventListener('click', function () {
       const href = this.dataset.href;
       if (href) window.location.href = href;
     });
   });
-});
+}
 
-// Global actions
-window.addToCart = function(e, btn) {
-  if(e) e.stopPropagation();
-  const cardBody = btn.closest('.gear-card__info') || btn.closest('.card__body');
-  const title = cardBody.querySelector('h3, h4').innerText;
-  alert(title + ' added to cart!');
-};
+/* ============================================================
+   SMOOTH SCROLL (anchor links)
+   ============================================================ */
 
-window.selectCampsite = function(e, btn) {
-  if(e) e.stopPropagation();
-  const cardBody = btn.closest('.card__body');
-  const title = cardBody.querySelector('h3').innerText;
-  alert(title + ' selected!');
-};
+function initSmoothScroll() {
+  $$('a[href^="#"]').forEach(anchor => {
+    anchor.addEventListener('click', function (e) {
+      const target = $(this.getAttribute('href'));
+      if (target) {
+        e.preventDefault();
+        target.scrollIntoView({ behavior: 'smooth' });
+      }
+    });
+  });
+}
 
+/* ============================================================
+   CAMPSITE MODAL
+   ============================================================ */
 
-
-// Detailed Campsite Data for Modal
-const detailedCampsiteData = {
+/** Detailed campsite data for the modal */
+const DETAILED_CAMPSITE_DATA = {
   'great-western': {
     name: 'Great Western Mountain',
     location: 'Nuwara Eliya',
     image: 'images/distict/Nuwara Eliya/Great Western Mountain.jpg',
     description: 'The 8th highest mountain in Sri Lanka. Its trail is ranked as difficult due to its steep incline and difficult, unclear path. A rewarding challenge for experienced hikers.',
-    season: 'Jan - Mar',
-    weather: 'Chilly (12°C - 16°C)',
+    season: 'Jan – Mar',
+    weather: 'Chilly (12°C – 16°C)',
     safety: [
       'Trail can be slippery and unclear; a local guide is recommended.',
       'Carry adequate warm clothing for the night.',
@@ -182,8 +551,8 @@ const detailedCampsiteData = {
     location: 'Badulla',
     image: 'images/distict/Badulla/bambaragala.jpg',
     description: 'The location features a sharp cliff edge offering clear vistas of Namunukula Mountain, Monaragala, Buttala, and Wellawaya.',
-    season: 'Dec - Apr',
-    weather: 'Mild (18°C - 24°C)',
+    season: 'Dec – Apr',
+    weather: 'Mild (18°C – 24°C)',
     safety: [
       'Stay away from the sharp cliff edge, especially during strong winds.',
       'Watch your step on loose rocks.',
@@ -198,9 +567,9 @@ const detailedCampsiteData = {
     name: 'Narangala Mountain',
     location: 'Badulla',
     image: 'images/distict/Badulla/Narangala Mountain.jpg',
-    description: 'Narangala is pure magic for campers a steep, windy trek up to a massive ridge where you can pitch your tent right on the edge of the world and wake up completely surrounded by a sea of clouds and a killer 360-degree sunrise.',
-    season: 'Feb - Jul',
-    weather: 'Warm (28°C - 32°C)',
+    description: 'Narangala is pure magic for campers — a steep, windy trek up to a massive ridge where you can pitch your tent right on the edge of the world and wake up completely surrounded by a sea of clouds and a killer 360-degree sunrise.',
+    season: 'Feb – Jul',
+    weather: 'Warm (28°C – 32°C)',
     safety: [
       'Beware of strong winds at the summit; pitch tents securely.',
       'Start the trek early to avoid the midday sun.',
@@ -215,9 +584,9 @@ const detailedCampsiteData = {
     name: 'Haritha Kanda',
     location: 'Badulla',
     image: 'images/distict/Badulla/haritha kanda.jpg',
-    description: 'This scenic rocky mountain is celebrated for its lush pastures, misty landscapes, and panoramic views of the hill country. It has earned a reputation among local travelers as a visual look-alike to the rolling hills of New Zealand.',
-    season: 'Jan - May',
-    weather: 'Cool (16°C - 22°C)',
+    description: 'This scenic rocky mountain is celebrated for its lush pastures, misty landscapes, and panoramic views of the hill country. It has earned a reputation among local travellers as a visual look-alike to the rolling hills of New Zealand.',
+    season: 'Jan – May',
+    weather: 'Cool (16°C – 22°C)',
     safety: [
       'Pastures can be slippery when misty.',
       'Be mindful of changing weather patterns.',
@@ -232,8 +601,8 @@ const detailedCampsiteData = {
     location: 'Kandy',
     image: 'images/distict/kandy/Hanthana.jpg',
     description: 'Most adventurers set up basic base camps on the open, rocky plateaus near the summits, which offer a natural escape from the leeches found lower down the slopes.',
-    season: 'Dec - Apr',
-    weather: 'Mild (22°C - 26°C)',
+    season: 'Dec – Apr',
+    weather: 'Mild (22°C – 26°C)',
     safety: [
       'Beware of leeches in the lower grassy areas; wear leech socks.',
       'Stay on marked paths to avoid getting lost.',
@@ -249,8 +618,8 @@ const detailedCampsiteData = {
     location: 'Kandy',
     image: 'images/distict/kandy/meemure.webp',
     description: 'Serene camping amidst towering pine trees with crisp mountain air.',
-    season: 'Jan - Apr',
-    weather: 'Cool (14°C - 20°C)',
+    season: 'Jan – Apr',
+    weather: 'Cool (14°C – 20°C)',
     safety: [
       'Ensure fires are completely extinguished to prevent forest fires.',
       'Keep food secured to prevent wildlife encounters.',
@@ -263,69 +632,144 @@ const detailedCampsiteData = {
   }
 };
 
-window.openCampsiteModal = function(campId) {
-  const data = detailedCampsiteData[campId];
+/**
+ * Open the campsite detail modal
+ * @param {string} campId
+ */
+window.openCampsiteModal = function (campId) {
+  const data = DETAILED_CAMPSITE_DATA[campId];
   if (!data) return;
 
-  const modal = document.getElementById('campsiteModal');
-  const modalBody = document.getElementById('modalBody');
-  
-  if (modal && modalBody) {
-    let safetyHtml = '';
-    data.safety.forEach(item => { safetyHtml += `<li>${item}</li>`; });
+  const modal = $('#campsiteModal');
+  const modalBody = $('#modalBody');
 
-    let gearHtml = '';
-    data.gear.forEach(item => {
-      gearHtml += `
-        <div class="modal-gear-item">
-          <img src="${item.image}" alt="${item.name}" class="modal-gear-img">
-          <div class="modal-gear-info">
-            <h4>${item.name} <span class="badge badge--rent" style="font-size: 0.7rem; position: static; padding: 2px 6px;">${item.avail}</span></h4>
-            <p>${item.category} • ${item.store}</p>
-          </div>
-          <button class="btn btn--primary" onclick="addToCart(event, this)">Add to Cart</button>
-        </div>
-      `;
-    });
+  if (!modal || !modalBody) return;
 
-    modalBody.innerHTML = `
-      <div class="modal-grid">
-        <div class="modal-left">
-          <img src="${data.image}" alt="${data.name}" class="modal-header-img">
-          <h2 class="modal-title">${data.name}</h2>
-          <div class="modal-meta">
-            <span><span class="icon-placeholder" data-icon="location"></span> ${data.location}</span>
-            <span><span class="icon-placeholder" data-icon="calendar"></span> ${data.season}</span>
-            <span><span class="icon-placeholder" data-icon="temp"></span> ${data.weather}</span>
-          </div>
-          <p class="modal-desc">${data.description}</p>
-        </div>
-        <div class="modal-right">
-          <h3 class="modal-section-title">Safety Guidelines</h3>
-          <ul class="modal-safety">
-            ${safetyHtml}
-          </ul>
-          
-          <h3 class="modal-section-title">Nearby Gear</h3>
-          <div class="modal-gear-list">
-            ${gearHtml}
-          </div>
-        </div>
+  const safetyHtml = data.safety.map(item => `<li>${item}</li>`).join('');
+
+  const gearHtml = data.gear.map(item => `
+    <div class="modal-gear-item">
+      <img src="${item.image}" alt="${item.name}" class="modal-gear-img" loading="lazy" width="60" height="60">
+      <div class="modal-gear-info">
+        <h4>${item.name} <span class="badge badge--rent" style="font-size:0.7rem;position:static;padding:2px 6px;">${item.avail}</span></h4>
+        <p>${item.category} • ${item.store}</p>
       </div>
-    `;
+      <button class="btn btn--primary" onclick="addToCart(event, this)" aria-label="Add ${item.name} to cart">Add to Cart</button>
+    </div>
+  `).join('');
 
-    modal.classList.add('show');
+  modalBody.innerHTML = `
+    <div class="modal-grid">
+      <div class="modal-left">
+        <img src="${data.image}" alt="${data.name}" class="modal-header-img" loading="lazy">
+        <h2 class="modal-title">${data.name}</h2>
+        <div class="modal-meta">
+          <span><i class="ph ph-map-pin" aria-hidden="true"></i> ${data.location}</span>
+          <span><i class="ph ph-calendar-blank" aria-hidden="true"></i> ${data.season}</span>
+          <span><i class="ph ph-thermometer" aria-hidden="true"></i> ${data.weather}</span>
+        </div>
+        <p class="modal-desc">${data.description}</p>
+      </div>
+      <div class="modal-right">
+        <h3 class="modal-section-title">Safety Guidelines</h3>
+        <ul class="modal-safety">${safetyHtml}</ul>
+        <h3 class="modal-section-title">Nearby Gear</h3>
+        <div class="modal-gear-list">${gearHtml}</div>
+      </div>
+    </div>
+  `;
+
+  modal.classList.add('show');
+  modal.setAttribute('aria-hidden', 'false');
+  // Trap focus inside modal
+  modal.querySelector('.modal-close').focus();
+  document.body.classList.add('menu-open'); // reuse scroll lock
+};
+
+/** Close the campsite detail modal */
+window.closeCampsiteModal = function () {
+  const modal = $('#campsiteModal');
+  if (modal) {
+    modal.classList.remove('show');
+    modal.setAttribute('aria-hidden', 'true');
+    document.body.classList.remove('menu-open');
   }
 };
 
-window.closeCampsiteModal = function() {
-  const modal = document.getElementById('campsiteModal');
-  if (modal) modal.classList.remove('show');
+/* ============================================================
+   GLOBAL ADD TO CART (kept as global for inline onclick attrs)
+   ============================================================ */
+
+window.addToCart = function (e, btn) {
+  if (e) e.stopPropagation();
+  const cardBody = btn.closest('.gear-card__info') || btn.closest('.card__body') || btn.closest('.modal-gear-info');
+  const title = cardBody?.querySelector('h3, h4')?.innerText || 'Item';
+  showToast(`${title} added to cart! 🎒`, 'success');
 };
 
-window.onclick = function(event) {
-  const modal = document.getElementById('campsiteModal');
-  if (event.target === modal) {
-    closeCampsiteModal();
-  }
+window.selectCampsite = function (e, btn) {
+  if (e) e.stopPropagation();
+  const cardBody = btn.closest('.card__body');
+  const title = cardBody?.querySelector('h3')?.innerText || 'Campsite';
+  showToast(`${title} selected!`, 'success');
 };
+
+/* ============================================================
+   MODAL BACKDROP CLICK + KEYBOARD CLOSE
+   ============================================================ */
+
+function initModalEvents() {
+  const modal = $('#campsiteModal');
+  if (!modal) return;
+
+  // Backdrop click
+  modal.addEventListener('click', (e) => {
+    if (e.target === modal) window.closeCampsiteModal();
+  });
+
+  // Escape key
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && modal.classList.contains('show')) {
+      window.closeCampsiteModal();
+    }
+  });
+}
+
+/* ============================================================
+   INTERSECTION OBSERVER — fade-in cards on scroll
+   ============================================================ */
+
+function initScrollReveal() {
+  if (!('IntersectionObserver' in window)) return;
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('revealed');
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+
+  $$('.camp-card, .gear-card, .card, .review-slide').forEach(el => {
+    el.classList.add('reveal-on-scroll');
+    observer.observe(el);
+  });
+}
+
+/* ============================================================
+   BOOT — run after DOM is ready
+   ============================================================ */
+
+document.addEventListener('DOMContentLoaded', () => {
+  initNavigation();
+  initHeroSearch();
+  initCampsiteSearch();
+  initNearbyGear();
+  initCarousel();
+  initContactForm();
+  initClickableCards();
+  initSmoothScroll();
+  initModalEvents();
+  initScrollReveal();
+});
