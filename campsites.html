@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Campsites - Camp Lanka</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css" />
+  <link rel="icon" href="favicon.png">
+  <script src="https://unpkg.com/@phosphor-icons/web"></script>
+</head>
+<body>
+  <header class="header">
+    <div class="container header__container">
+      <a href="index.html" class="logo">Camp Lanka</a>
+      <nav class="nav">
+        <ul class="nav__list">
+          <li><a href="index.html" class="nav__link">Home</a></li>
+          <li><a href="about.html" class="nav__link">About</a></li>
+          <li><a href="campsites.html" class="nav__link active">Campsites</a></li>
+          <li><a href="gear.html" class="nav__link">Gear</a></li>
+          <li><a href="reviews.html" class="nav__link">Reviews</a></li>
+          <li><a href="contact.html" class="nav__link">Contact</a></li>
+        </ul>
+        <button class="hamburger" aria-label="Menu"><i class="ph ph-list" style="font-size: 1.5rem;"></i></button>
+      </nav>
+    </div>
+  </header>
+
+  <main style="padding-top: 5rem;">
+    <section class="section">
+      <div class="container">
+        <h2 class="section__title">Explore Campsites</h2>
+        <div class="filter-bar">
+          <button class="filter-btn active" data-filter="all">All Locations</button>
+          <button class="filter-btn" data-filter="nuwara-eliya">Nuwara Eliya</button>
+          <button class="filter-btn" data-filter="kandy">Kandy</button>
+          <button class="filter-btn" data-filter="yala">Yala</button>
+          <button class="filter-btn" data-filter="badulla">Badulla</button>
+        </div>
+
+        <div class="grid grid--3" id="campsite-grid">
+                    <div class="camp-card" data-camp="great-western">
+            <img src="images/distict/Nuwara Eliya/Great Western Mountain.jpg" alt="Great Western Mountain" class="camp-card-img" loading="lazy" />
+            <div class="camp-card-body">
+              <div class="camp-card-meta">
+                <span><span class="icon-placeholder" data-icon="location"></span> Nuwara Eliya</span>
+                <span><span class="icon-placeholder" data-icon="star" style="color:#FFD700;"></span> 4.7</span>
+              </div>
+              <h3 class="camp-card-title">Great Western Mountain</h3>
+              <p class="camp-desc">The 8th highest mountain offering a steep incline and challenging trail.</p>
+              <div class="camp-card-footer">
+                <span class="season-info"><span class="icon-placeholder" data-icon="calendar"></span> Jan – Mar</span>
+                <button class="btn btn--primary btn-sm" style="padding: 8px 16px; font-size: 0.85rem;" onclick="openCampsiteModal('great-western')">Explore</button>
+              </div>
+            </div>
+          </div>
+
+          <div class="camp-card" data-camp="bambaragala">
+            <img src="images/distict/Badulla/bambaragala.jpg" alt="bambaragala" class="camp-card-img" loading="lazy" />
+            <div class="camp-card-body">
+              <div class="camp-card-meta">
+                <span><span class="icon-placeholder" data-icon="location"></span> Badulla</span>
+                <span><span class="icon-placeholder" data-icon="star" style="color:#FFD700;"></span> 4.5</span>
+              </div>
+              <h3 class="camp-card-title">Bambaragala</h3>
+              <p class="camp-desc">Features a sharp cliff edge offering clear vistas of nearby mountains.</p>
+              <div class="camp-card-footer">
+                <span class="season-info"><span class="icon-placeholder" data-icon="calendar"></span> Dec – Apr</span>
+                <button class="btn btn--primary btn-sm" style="padding: 8px 16px; font-size: 0.85rem;" onclick="openCampsiteModal('bambaragala')">Explore</button>
+              </div>
+            </div>
+          </div>
+
+          <div class="camp-card" data-camp="narangala">
+            <img src="images/distict/Badulla/Narangala Mountain.jpg" alt="Narangala Mountain" class="camp-card-img" loading="lazy" />
+            <div class="camp-card-body">
+              <div class="camp-card-meta">
+                <span><span class="icon-placeholder" data-icon="location"></span> Badulla</span>
+                <span><span class="icon-placeholder" data-icon="star" style="color:#FFD700;"></span> 4.9</span>
+              </div>
+              <h3 class="camp-card-title">Narangala Mountain</h3>
+              <p class="camp-desc">Pure magic with a sea of clouds and a killer 360-degree sunrise.</p>
+              <div class="camp-card-footer">
+                <span class="season-info"><span class="icon-placeholder" data-icon="calendar"></span> Feb – Jul</span>
+                <button class="btn btn--primary btn-sm" style="padding: 8px 16px; font-size: 0.85rem;" onclick="openCampsiteModal('narangala')">Explore</button>
+              </div>
+            </div>
+          </div>
+
+          <div class="camp-card" data-camp="haritha-kanda">
+            <img src="images/distict/Badulla/haritha kanda.jpg" alt="Haritha kanda" class="camp-card-img" loading="lazy" />
+            <div class="camp-card-body">
+              <div class="camp-card-meta">
+                <span><span class="icon-placeholder" data-icon="location"></span> Badulla</span>
+                <span><span class="icon-placeholder" data-icon="star" style="color:#FFD700;"></span> 4.8</span>
+              </div>
+              <h3 class="camp-card-title">Haritha kanda</h3>
+              <p class="camp-desc">Scenic rocky mountain celebrated for its lush pastures and misty landscapes.</p>
+              <div class="camp-card-footer">
+                <span class="season-info"><span class="icon-placeholder" data-icon="calendar"></span> Jan – May</span>
+                <button class="btn btn--primary btn-sm" style="padding: 8px 16px; font-size: 0.85rem;" onclick="openCampsiteModal('haritha-kanda')">Explore</button>
+              </div>
+            </div>
+          </div>
+
+          <div class="camp-card" data-camp="hanthana">
+            <img src="images/distict/kandy/Hanthana.jpg" alt="Hanthana" class="camp-card-img" loading="lazy" />
+            <div class="camp-card-body">
+              <div class="camp-card-meta">
+                <span><span class="icon-placeholder" data-icon="location"></span> Kandy</span>
+                <span><span class="icon-placeholder" data-icon="star" style="color:#FFD700;"></span> 4.6</span>
+              </div>
+              <h3 class="camp-card-title">Hanthana</h3>
+              <p class="camp-desc">Set up base camps on open rocky plateaus near the summits.</p>
+              <div class="camp-card-footer">
+                <span class="season-info"><span class="icon-placeholder" data-icon="calendar"></span> Dec – Apr</span>
+                <button class="btn btn--primary btn-sm" style="padding: 8px 16px; font-size: 0.85rem;" onclick="openCampsiteModal('hanthana')">Explore</button>
+              </div>
+            </div>
+          </div>
+
+          <div class="camp-card" data-camp="meemure">
+            <img src="images/distict/kandy/meemure.webp" alt="meemure" class="camp-card-img" loading="lazy" />
+            <div class="camp-card-body">
+              <div class="camp-card-meta">
+                <span><span class="icon-placeholder" data-icon="location"></span> Kandy</span>
+                <span><span class="icon-placeholder" data-icon="star" style="color:#FFD700;"></span> 4.9</span>
+              </div>
+              <h3 class="camp-card-title">Meemure Village</h3>
+              <p class="camp-desc">Serene camping amidst towering pine trees with crisp mountain air.</p>
+              <div class="camp-card-footer">
+                <span class="season-info"><span class="icon-placeholder" data-icon="calendar"></span> Jan – Apr</span>
+                <button class="btn btn--primary btn-sm" style="padding: 8px 16px; font-size: 0.85rem;" onclick="openCampsiteModal('meemure')">Explore</button>
+              </div>
+            </div>
+          </div>      </div>        <!-- Nearby Gear Section -->
+       <!-- <div class="nearby">
+          <div class="nearby__header">
+            <h2>Nearby Camping Gear</h2>
+            <p style="color: var(--color-text-light);">Click on a campsite above to see available gear rentals and shops nearby.</p>
+          </div>
+          <div id="gearPlaceholders" class="nearby__placeholder">
+            <div class="empty"><span class="icon-placeholder" data-icon="store"></span>Select a campsite</div>
+            <div class="empty"><span class="icon-placeholder" data-icon=""></span>Gear will appear here</div>
+          </div> -->
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="container">
+      <div class="footer__grid">
+        <div class="footer__col"><h3>Camp Lanka</h3><p>Your ultimate guide to outdoor adventures and camping in Sri Lanka.</p></div>
+        <div class="footer__col">
+          <h4>Quick Links</h4>
+          <ul><li><a href="about.html">About Us</a></li><li><a href="campsites.html">Campsites</a></li><li><a href="gear.html">Gear Rental</a></li><li><a href="contact.html">Contact</a></li></ul>
+        </div>
+        <div class="footer__col">
+          <h4>Connect</h4>
+          <div class="social">
+            <a href="#" aria-label="Facebook"><i class="ph-fill ph-facebook-logo" style="font-size: 1.2rem;"></i></a>
+            <a href="#" aria-label="Instagram"><i class="ph-fill ph-instagram-logo" style="font-size: 1.2rem;"></i></a>
+            <a href="#" aria-label="Twitter"><i class="ph-fill ph-x-logo" style="font-size: 1.2rem;"></i></a>
+          </div>
+        </div>
+      </div>
+      <div class="footer__bottom"><p>&copy; 2026 Camp Lanka. All rights reserved.</p></div>
+    </div>
+  </footer>
+  <script src="js/script.js"></script>
+
+  <!-- Campsite Modal -->
+  <div id="campsiteModal" class="modal">
+    <div class="modal-content">
+      <span class="modal-close" onclick="closeCampsiteModal()">&times;</span>
+      <div id="modalBody"></div>
+    </div>
+  </div></body>
+</html>

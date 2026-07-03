@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Camp Lanka – Green Adventures</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css" />
+  <link rel="icon" href="favicon.png">
+  <script src="https://unpkg.com/@phosphor-icons/web"></script>
+</head>
+<body>
+  <header class="header">
+    <div class="container header__container">
+      <a href="index.html" class="logo">Camp Lanka</a>
+      <nav class="nav">
+        <ul class="nav__list">
+          <li><a href="index.html" class="nav__link active">Home</a></li>
+          <li><a href="about.html" class="nav__link">About</a></li>
+          <li><a href="campsites.html" class="nav__link">Campsites</a></li>
+          <li><a href="gear.html" class="nav__link">Gear</a></li>
+          <li><a href="contact.html" class="nav__link">Contact</a></li>
+        </ul>
+        <button class="hamburger" aria-label="Menu"><i class="ph ph-list" style="font-size: 1.5rem;"></i></button>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="hero__content">
+        <h1 class="hero__title">Discover the Perfect<br><span>Camping Adventure</span></h1>
+        <p class="hero__text">Find the best camping destinations and nearby gear in one place —<br>curated for your terrain, weather, and elevation.</p>
+        
+        <div class="search-bar">
+          <div class="search-group">
+            <label><i class="ph ph-map-pin"></i> Destination</label>
+            <input type="text" placeholder="Where to camp?">
+          </div>
+          <div class="search-group">
+            <label><i class="ph ph-leaf"></i> Category</label>
+            <select>
+              <option>Any type</option>
+              <option>Mountain</option>
+              <option>Forest</option>
+              <option>Beach</option>
+            </select>
+          </div>
+          <div class="search-group">
+            <label><i class="ph ph-users"></i> Travelers</label>
+            <select>
+              <option>2</option>
+              <option>1</option>
+              <option>3</option>
+              <option>4+</option>
+            </select>
+          </div>
+          <div class="search-group">
+            <label><i class="ph ph-calendar-blank"></i> Date</label>
+            <input type="date">
+          </div>
+          <div class="search-btn-container">
+            <button class="search-btn"><i class="ph ph-magnifying-glass"></i> Search Campsites</button>
+          </div>
+        </div>
+
+        <div class="stats-row">
+          <div class="stat-item">
+            <span class="stat-value">2,400+</span>
+            <span class="stat-label">Campsites</span>
+          </div>
+          <div class="stat-item">
+            <span class="stat-value">18k+</span>
+            <span class="stat-label">Adventurers</span>
+          </div>
+          <div class="stat-item">
+            <span class="stat-value">4.9<i class="ph-fill ph-star" style="font-size: 1.2rem; margin-left: 5px; color:#FFD700;"></i></span>
+            <span class="stat-label">Rating</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section featured">
+      <div class="container">
+        <div style="display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 2.5rem; flex-wrap: wrap; gap: 1rem;">
+          <h2 class="section__title" style="margin-bottom: 0;">Top Camping Locations</h2>
+          <a href="campsites.html" style="font-weight: 600; color: var(--color-primary); display: flex; align-items: center; gap: 0.5rem; font-size: 0.95rem;">View all <i class="ph ph-arrow-right"></i></a>
+        </div>
+        <div class="grid grid--3">
+          
+          <div class="camp-card" data-camp="great-western">
+            <div style="position: relative;">
+              <span class="badge badge--mountain" style="left: 1rem; top: 1rem;">Mountain</span>
+              <span class="badge" style="left: 5.8rem; top: 1rem; background: #bd8638; color: #fff;">Moderate</span>
+              <button style="position: absolute; right: 1rem; top: 1rem; background: rgba(0,0,0,0.5); border: none; border-radius: 50%; width: 32px; height: 32px; color: #fff; cursor: pointer; display: flex; align-items: center; justify-content: center; backdrop-filter: blur(4px);"><i class="ph ph-heart"></i></button>
+              <img src="images\distict\Nuwara Eliya\Great Western Mountain.jpg" alt="Great Western Mountain" class="camp-card-img" loading="lazy" />
+              <div style="position: absolute; bottom: 1rem; left: 1rem; color: #fff; font-weight: 600; display: flex; align-items: center; gap: 0.3rem;"><i class="ph-fill ph-star" style="color:#FFD700;"></i> 4.9 <span style="font-size: 0.8rem; font-weight: 400; opacity: 0.8;">(342)</span></div>
+            </div>
+            <div class="camp-card-body">
+              <h3 class="camp-card-title">Horton Plains</h3>
+              <div class="camp-card-meta" style="margin-bottom: 1rem;">
+                <span><i class="ph ph-map-pin"></i> Central Province, Sri Lanka</span>
+              </div>
+              <p class="camp-desc">A breathtaking plateau with World's End viewpoint, misty mornings, and rare endemic wildlife found nowhere else on earth.</p>
+              
+              <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 0.5rem; margin-top: 1rem;">
+                <div style="background: rgba(255,255,255,0.03); padding: 0.8rem 0.2rem; border-radius: 12px; text-align: center; border: 1px solid rgba(255,255,255,0.05);">
+                  <i class="ph ph-mountains" style="color: var(--color-text-light); font-size: 1.2rem; margin-bottom: 0.3rem;"></i>
+                  <div style="font-weight: 600; font-size: 0.85rem; color: #fff;">2,100m</div>
+                  <div style="font-size: 0.7rem; color: var(--color-text-light);">Elevation</div>
+                </div>
+                <div style="background: rgba(255,255,255,0.03); padding: 0.8rem 0.2rem; border-radius: 12px; text-align: center; border: 1px solid rgba(255,255,255,0.05);">
+                  <i class="ph ph-thermometer" style="color: var(--color-text-light); font-size: 1.2rem; margin-bottom: 0.3rem;"></i>
+                  <div style="font-weight: 600; font-size: 0.85rem; color: #fff;">Cool</div>
+                  <div style="font-size: 0.7rem; color: var(--color-text-light);">Weather</div>
+                </div>
+                <div style="background: rgba(255,255,255,0.03); padding: 0.8rem 0.2rem; border-radius: 12px; text-align: center; border: 1px solid rgba(255,255,255,0.05);">
+                  <i class="ph ph-calendar-blank" style="color: var(--color-text-light); font-size: 1.2rem; margin-bottom: 0.3rem;"></i>
+                  <div style="font-weight: 600; font-size: 0.85rem; color: #fff;">Dec - Mar</div>
+                  <div style="font-size: 0.7rem; color: var(--color-text-light);">Best Season</div>
+                </div>
+              </div>
+              <button class="btn btn--outline" style="width: 100%; margin-top: 1.5rem; border-radius: 12px; border-color: rgba(255,255,255,0.1); color: #fff;" onclick="openCampsiteModal('great-western')">Explore Camp <i class="ph ph-caret-right" style="vertical-align: middle;"></i></button>
+            </div>
+          </div>
+
+          <div class="camp-card" data-camp="bambaragala">
+            <div style="position: relative;">
+              <span class="badge" style="left: 1rem; top: 1rem; background: #2a6b57; color: #fff;">Adventure</span>
+              <span class="badge" style="left: 6rem; top: 1rem; background: #e06c6c; color: #fff;">Challenging</span>
+              <button style="position: absolute; right: 1rem; top: 1rem; background: rgba(0,0,0,0.5); border: none; border-radius: 50%; width: 32px; height: 32px; color: #fff; cursor: pointer; display: flex; align-items: center; justify-content: center; backdrop-filter: blur(4px);"><i class="ph ph-heart"></i></button>
+              <img src="images\distict\Badulla\bambaragala.jpg" alt="Knuckles" class="camp-card-img" loading="lazy" />
+              <div style="position: absolute; bottom: 1rem; left: 1rem; color: #fff; font-weight: 600; display: flex; align-items: center; gap: 0.3rem;"><i class="ph-fill ph-star" style="color:#FFD700;"></i> 4.8 <span style="font-size: 0.8rem; font-weight: 400; opacity: 0.8;">(218)</span></div>
+            </div>
+            <div class="camp-card-body">
+              <h3 class="camp-card-title">Knuckles Mountain Range</h3>
+              <div class="camp-card-meta" style="margin-bottom: 1rem;">
+                <span><i class="ph ph-map-pin"></i> Matale District, Sri Lanka</span>
+              </div>
+              <p class="camp-desc">UNESCO-listed mountain range with hidden valleys, dramatic waterfalls, and stunning ridge walks through dense cloud forest.</p>
+              
+              <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 0.5rem; margin-top: 1rem;">
+                <div style="background: rgba(255,255,255,0.03); padding: 0.8rem 0.2rem; border-radius: 12px; text-align: center; border: 1px solid rgba(255,255,255,0.05);">
+                  <i class="ph ph-mountains" style="color: var(--color-text-light); font-size: 1.2rem; margin-bottom: 0.3rem;"></i>
+                  <div style="font-weight: 600; font-size: 0.85rem; color: #fff;">1,863m</div>
+                  <div style="font-size: 0.7rem; color: var(--color-text-light);">Elevation</div>
+                </div>
+                <div style="background: rgba(255,255,255,0.03); padding: 0.8rem 0.2rem; border-radius: 12px; text-align: center; border: 1px solid rgba(255,255,255,0.05);">
+                  <i class="ph ph-thermometer" style="color: var(--color-text-light); font-size: 1.2rem; margin-bottom: 0.3rem;"></i>
+                  <div style="font-weight: 600; font-size: 0.85rem; color: #fff;">Tropical</div>
+                  <div style="font-size: 0.7rem; color: var(--color-text-light);">Weather</div>
+                </div>
+                <div style="background: rgba(255,255,255,0.03); padding: 0.8rem 0.2rem; border-radius: 12px; text-align: center; border: 1px solid rgba(255,255,255,0.05);">
+                  <i class="ph ph-calendar-blank" style="color: var(--color-text-light); font-size: 1.2rem; margin-bottom: 0.3rem;"></i>
+                  <div style="font-weight: 600; font-size: 0.85rem; color: #fff;">Jan - Apr</div>
+                  <div style="font-size: 0.7rem; color: var(--color-text-light);">Best Season</div>
+                </div>
+              </div>
+              <button class="btn btn--outline" style="width: 100%; margin-top: 1.5rem; border-radius: 12px; border-color: rgba(255,255,255,0.1); color: #fff;" onclick="openCampsiteModal('bambaragala')">Explore Camp <i class="ph ph-caret-right" style="vertical-align: middle;"></i></button>
+            </div>
+          </div>
+
+          <div class="camp-card" data-camp="narangala">
+            <div style="position: relative;">
+              <span class="badge" style="left: 1rem; top: 1rem; background: #3c7d5c; color: #fff;">Family</span>
+              <span class="badge" style="left: 4.8rem; top: 1rem; background: #5db379; color: #fff;">Easy</span>
+              <button style="position: absolute; right: 1rem; top: 1rem; background: rgba(0,0,0,0.5); border: none; border-radius: 50%; width: 32px; height: 32px; color: #fff; cursor: pointer; display: flex; align-items: center; justify-content: center; backdrop-filter: blur(4px);"><i class="ph ph-heart"></i></button>
+              <img src="images\distict\Badulla\Narangala Mountain.jpg" alt="Ella Forest Camp" class="camp-card-img" loading="lazy" />
+              <div style="position: absolute; bottom: 1rem; left: 1rem; color: #fff; font-weight: 600; display: flex; align-items: center; gap: 0.3rem;"><i class="ph-fill ph-star" style="color:#FFD700;"></i> 4.7 <span style="font-size: 0.8rem; font-weight: 400; opacity: 0.8;">(456)</span></div>
+            </div>
+            <div class="camp-card-body">
+              <h3 class="camp-card-title">Ella Forest Camp</h3>
+              <div class="camp-card-meta" style="margin-bottom: 1rem;">
+                <span><i class="ph ph-map-pin"></i> Badulla District, Sri Lanka</span>
+              </div>
+              <p class="camp-desc">Lush forest camp with panoramic valley views, tea plantation trails, and cozy campfire evenings under a sky full of stars.</p>
+              
+              <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 0.5rem; margin-top: 1rem;">
+                <div style="background: rgba(255,255,255,0.03); padding: 0.8rem 0.2rem; border-radius: 12px; text-align: center; border: 1px solid rgba(255,255,255,0.05);">
+                  <i class="ph ph-mountains" style="color: var(--color-text-light); font-size: 1.2rem; margin-bottom: 0.3rem;"></i>
+                  <div style="font-weight: 600; font-size: 0.85rem; color: #fff;">1,041m</div>
+                  <div style="font-size: 0.7rem; color: var(--color-text-light);">Elevation</div>
+                </div>
+                <div style="background: rgba(255,255,255,0.03); padding: 0.8rem 0.2rem; border-radius: 12px; text-align: center; border: 1px solid rgba(255,255,255,0.05);">
+                  <i class="ph ph-thermometer" style="color: var(--color-text-light); font-size: 1.2rem; margin-bottom: 0.3rem;"></i>
+                  <div style="font-weight: 600; font-size: 0.85rem; color: #fff;">Warm</div>
+                  <div style="font-size: 0.7rem; color: var(--color-text-light);">Weather</div>
+                </div>
+                <div style="background: rgba(255,255,255,0.03); padding: 0.8rem 0.2rem; border-radius: 12px; text-align: center; border: 1px solid rgba(255,255,255,0.05);">
+                  <i class="ph ph-calendar-blank" style="color: var(--color-text-light); font-size: 1.2rem; margin-bottom: 0.3rem;"></i>
+                  <div style="font-weight: 600; font-size: 0.85rem; color: #fff;">All Year</div>
+                  <div style="font-size: 0.7rem; color: var(--color-text-light);">Best Season</div>
+                </div>
+              </div>
+              <button class="btn btn--outline" style="width: 100%; margin-top: 1.5rem; border-radius: 12px; border-color: rgba(255,255,255,0.1); color: #fff;" onclick="openCampsiteModal('narangala')">Explore Camp <i class="ph ph-caret-right" style="vertical-align: middle;"></i></button>
+            </div>
+          </div>
+          
+        </div>
+      </div>
+    </section>
+
+    <section class="section section--alt gear-preview">
+      <div class="container">
+        <h2 class="section__title">Essential Gear</h2>
+        <div class="grid grid--3">
+          <div class="gear-card">
+            <img src="images\Gear\4-Person Dome Tent.jpg" alt="Tent" loading="lazy" />
+            <div class="gear-card__info">
+              <h4>4-Person Tent</h4>
+              <p>Spacious &amp; waterproof</p>
+              <span class="badge badge--rent">Rent / Buy</span>
+              <button class="btn btn--primary btn-action" style="margin-top: 0.5rem; width: 100%; padding: 0.3rem; font-size: 0.85rem;" onclick="addToCart(event, this)">Add to Cart</button>
+            </div>
+          </div>
+          <div class="gear-card">
+            <img src="images\Gear\Thermal Sleeping Bag.jpg" alt="Sleeping Bag" loading="lazy" />
+            <div class="gear-card__info">
+              <h4>Thermal Sleeping Bag</h4>
+              <p>Sub-zero rated</p>
+              <span class="badge badge--rent">Rent / Buy</span>
+              <button class="btn btn--primary btn-action" style="margin-top: 0.5rem; width: 100%; padding: 0.3rem; font-size: 0.85rem;" onclick="addToCart(event, this)">Add to Cart</button>
+            </div>
+          </div>
+          <div class="gear-card">
+            <img src="images\Gear\LED Camping Lantern.jpg" alt="Headlamp" loading="lazy" />
+            <div class="gear-card__info">
+              <h4>LED Headlamp</h4>
+              <p>Ultra-bright, long battery</p>
+              <span class="badge badge--buy">Buy</span>
+              <button class="btn btn--primary btn-action" style="margin-top: 0.5rem; width: 100%; padding: 0.3rem; font-size: 0.85rem;" onclick="addToCart(event, this)">Add to Cart</button>
+            </div>
+          </div>
+        </div>
+        <div class="section__action">
+          <a href="gear.html" class="btn btn--primary">Browse Gear Shop</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="container">
+      <div class="footer__grid">
+        <div class="footer__col">
+          <h3>Camp Lanka</h3>
+          <p>Your ultimate guide to outdoor adventures and camping in Sri Lanka.</p>
+        </div>
+        <div class="footer__col">
+          <h4>Quick Links</h4>
+          <ul>
+            <li><a href="about.html">About Us</a></li>
+            <li><a href="campsites.html">Campsites</a></li>
+            <li><a href="gear.html">Gear Rental</a></li>
+            <li><a href="contact.html">Contact</a></li>
+          </ul>
+        </div>
+        <div class="footer__col">
+          <h4>Connect</h4>
+          <div class="social">
+            <a href="#" aria-label="Facebook"><i class="ph-fill ph-facebook-logo" style="font-size: 1.2rem;"></i></a>
+            <a href="#" aria-label="Instagram"><i class="ph-fill ph-instagram-logo" style="font-size: 1.2rem;"></i></a>
+            <a href="#" aria-label="Twitter"><i class="ph-fill ph-x-logo" style="font-size: 1.2rem;"></i></a>
+          </div>
+        </div>
+      </div>
+      <div class="footer__bottom"><p>&copy; 2026 Camp Lanka. All rights reserved.</p></div>
+    </div>
+  </footer>
+  <script src="js/script.js"></script>
+
+  <!-- Campsite Modal -->
+  <div id="campsiteModal" class="modal">
+    <div class="modal-content">
+      <span class="modal-close" onclick="closeCampsiteModal()">&times;</span>
+      <div id="modalBody"></div>
+    </div>
+  </div>\n</body>
+</html>
