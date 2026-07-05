@@ -5,7 +5,7 @@ Welcome to **Camp Lanka**, a comprehensive, responsive web application designed 
 ---
 ## 🌐 Live Demo
 
-👉 https://piyumz.github.io/camp-lanka/
+👉 https://piyumz.github.io/camp_lanka/
 
 ---
 ## 🚀 Features
