@@ -1,3 +1,4 @@
+![Camp Lanka Thumbnail](images/thumbnail.png)
 # 🏕️ Camp Lanka – Green Adventures in Sri Lanka
 
 Welcome to **Camp Lanka**, a comprehensive, responsive web application designed for outdoor enthusiasts looking to discover the best camping destinations, find nearby gear, and plan their perfect outdoor adventure across Sri Lanka.
