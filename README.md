@@ -3,7 +3,11 @@
 Welcome to **Camp Lanka**, a comprehensive, responsive web application designed for outdoor enthusiasts looking to discover the best camping destinations, find nearby gear, and plan their perfect outdoor adventure across Sri Lanka.
 
 ---
+## 🌐 Live Demo
 
+👉 https://piyumz.github.io/camp-lanka/
+
+---
 ## 🚀 Features
 
 - **Smart Campsite Directory**: Filter and search through a curated database of campsites based on terrain (Mountain, Forest), difficulty level (Easy, Moderate, Hard), category, and dates.
@@ -13,6 +17,8 @@ Welcome to **Camp Lanka**, a comprehensive, responsive web application designed 
 - **Direct Inquiry Contact Form**: Plan your next trip by contacting campsite owners and coordinators directly via the built-in, responsive contact system.
 
 ---
+
+
 
 ## 🛠️ Project Structure
 
@@ -44,8 +50,8 @@ You only need a web browser (such as Chrome, Firefox, Safari, or Edge) to run th
 
 1. **Clone the repository:**
    ```bash
-   git clone https://github.com/your-username/camp-lanka.git
-   cd camp-lanka
+   git clone https://github.com/piyumz/camp_lanka.git
+   cd camp_lanka
    ```
 
 2. **Run locally:**
