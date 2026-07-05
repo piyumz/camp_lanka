@@ -550,13 +550,13 @@ const DETAILED_CAMPSITE_DATA = {
     name: 'Bambaragala',
     location: 'Badulla',
     image: 'images/distict/Badulla/bambaragala.jpg',
-    description: 'The location features a sharp cliff edge offering clear vistas of Namunukula Mountain, Monaragala, Buttala, and Wellawaya.',
-    season: 'Dec – Apr',
-    weather: 'Mild (18°C – 24°C)',
+    description: 'A scenic mountain surrounded by forests and tea estates. The trail features steep sections and rewarding panoramic views, making it suitable for hikers with moderate experience.',
+    season: 'Jan – Apr',
+    weather: 'Cool (16°C – 22°C)',
     safety: [
-      'Stay away from the sharp cliff edge, especially during strong winds.',
-      'Watch your step on loose rocks.',
-      'Keep a safe distance if taking photographs near edges.'
+      'Wear hiking shoes with good grip, especially after rain.',
+      'Carry sufficient drinking water and snacks.',
+      '•	Start early to avoid afternoon mist and rain.'
     ],
     gear: [
       { name: 'LED Camping Lantern', category: 'Lighting', store: 'Badulla Outdoor Rentals', image: 'images/Gear/LED Camping Lantern.jpg', avail: 'In Stock' },
@@ -567,13 +567,13 @@ const DETAILED_CAMPSITE_DATA = {
     name: 'Narangala Mountain',
     location: 'Badulla',
     image: 'images/distict/Badulla/Narangala Mountain.jpg',
-    description: 'Narangala is pure magic for campers — a steep, windy trek up to a massive ridge where you can pitch your tent right on the edge of the world and wake up completely surrounded by a sea of clouds and a killer 360-degree sunrise.',
-    season: 'Feb – Jul',
-    weather: 'Warm (28°C – 32°C)',
+    description: 'One of Sri Lanka\'s most popular camping mountains. The trail includes rocky climbs and spectacular sunrise views over the surrounding valleys',
+    season: 'Jan – Apr',
+    weather: 'Cool (14°C – 20°C)',
     safety: [
-      'Beware of strong winds at the summit; pitch tents securely.',
-      'Start the trek early to avoid the midday sun.',
-      'Carry enough water.'
+      'Strong winds are common near the summit.',
+      'Camp only in designated areas.',
+      'Carry enough water as natural sources are limited.'
     ],
     gear: [
       { name: '65L Trekking Backpack', category: 'Bags', store: 'Badulla Outdoor Rentals', image: 'images/Gear/65L Trekking Backpack.jpg', avail: 'In Stock' },
@@ -582,15 +582,15 @@ const DETAILED_CAMPSITE_DATA = {
   },
   'haritha-kanda': {
     name: 'Haritha Kanda',
-    location: 'Badulla',
+    location: 'Nuwara Eliya',
     image: 'images/distict/Badulla/haritha kanda.jpg',
-    description: 'This scenic rocky mountain is celebrated for its lush pastures, misty landscapes, and panoramic views of the hill country. It has earned a reputation among local travellers as a visual look-alike to the rolling hills of New Zealand.',
-    season: 'Jan – May',
-    weather: 'Cool (16°C – 22°C)',
+    description: 'A peaceful mountain known for its lush forests and camping opportunities. The hike is moderately difficult with beautiful sunrise viewpoints and rich biodiversity. ',
+    season: 'Dec – Mar',
+    weather: 'Cool (14°C – 20°C)',
     safety: [
-      'Pastures can be slippery when misty.',
-      'Be mindful of changing weather patterns.',
-      'Respect the local flora and avoid littering.'
+      'Leeches are common during wet weather.wear leech socks.',
+      'Bring warm clothing for overnight camping.',
+      'Avoid hiking alone and inform someone of your route.'
     ],
     gear: [
       { name: '4-Person Dome Tent', category: 'Tents', store: 'Badulla Outdoor Rentals', image: 'images/Gear/4-Person Dome Tent.jpg', avail: 'In Stock' }
@@ -600,13 +600,13 @@ const DETAILED_CAMPSITE_DATA = {
     name: 'Hanthana',
     location: 'Kandy',
     image: 'images/distict/kandy/Hanthana.jpg',
-    description: 'Most adventurers set up basic base camps on the open, rocky plateaus near the summits, which offer a natural escape from the leeches found lower down the slopes.',
-    season: 'Dec – Apr',
-    weather: 'Mild (22°C – 26°C)',
+    description: 'A mountain range famous for its rolling hills, tea plantations, and scenic hiking trails. Suitable for beginners and experienced hikers alike.',
+    season: 'Jan – Mar',
+    weather: 'Mild (18°C – 24°C)',
     safety: [
-      'Beware of leeches in the lower grassy areas; wear leech socks.',
-      'Stay on marked paths to avoid getting lost.',
-      'Avoid camping under large trees during thunderstorms.'
+      'Weather changes quickly; carry a light rain jacket.',
+      'Stay on marked trails to avoid getting lost.',
+      'Wear proper hiking shoes for steep sections. '
     ],
     gear: [
       { name: 'Thermal Sleeping Bag', category: 'Sleeping Bags', store: 'Kandy Gear Hub', image: 'images/Gear/Thermal Sleeping Bag.jpg', avail: 'In Stock' },
@@ -617,13 +617,13 @@ const DETAILED_CAMPSITE_DATA = {
     name: 'Meemure Village',
     location: 'Kandy',
     image: 'images/distict/kandy/meemure.webp',
-    description: 'Serene camping amidst towering pine trees with crisp mountain air.',
-    season: 'Jan – Apr',
-    weather: 'Cool (14°C – 20°C)',
+    description: 'A remote mountain village surrounded by the Knuckles Range. Popular for trekking, waterfalls, camping, and experiencing traditional village life.',
+    season: 'Jan – Mar',
+    weather: 'Cool (16°C – 24°C)',
     safety: [
-      'Ensure fires are completely extinguished to prevent forest fires.',
-      'Keep food secured to prevent wildlife encounters.',
-      'Be respectful of the remote village community.'
+      'Mobile network coverage is limited.',
+      'Travel in a 4WD vehicle where possible.',
+      'Carry emergency supplies and enough drinking water'
     ],
     gear: [
       { name: 'LED Camping Lantern', category: 'Lighting', store: 'Kandy Gear Hub', image: 'images/Gear/LED Camping Lantern.jpg', avail: 'In Stock' },
