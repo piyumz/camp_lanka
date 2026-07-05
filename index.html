@@ -7,10 +7,9 @@
   <title>Camp Lanka – Green Adventures in Sri Lanka</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="css/style.css" />
   <link rel="icon" href="favicon.png">
-  <!-- Phosphor Icons -->
   <script src="https://unpkg.com/@phosphor-icons/web"></script>
 </head>
 <body>
@@ -21,13 +20,11 @@
       <a href="index.html" class="logo" aria-label="Camp Lanka – Home">Camp Lanka</a>
       <nav class="nav" role="navigation" aria-label="Main navigation">
         <ul class="nav__list" id="nav-list" role="list">
-          <li role="listitem"><a href="index.html"      class="nav__link active" aria-current="page">Home</a></li>
-          <li role="listitem"><a href="campsites.html"  class="nav__link">Campsites</a></li>
-          <li role="listitem"><a href="gear.html"       class="nav__link">Gear</a></li>
-            <li role="listitem"><a href="about.html"      class="nav__link">About</a></li>
-
-          <!--<li role="listitem"><a href="reviews.html"    class="nav__link">Reviews</a></li>-->
-          <li role="listitem"><a href="contact.html"    class="nav__link">Contact</a></li>
+          <li role="listitem"><a href="index.html"     class="nav__link active" aria-current="page">Home</a></li>
+          <li role="listitem"><a href="campsites.html" class="nav__link">Campsites</a></li>
+          <li role="listitem"><a href="gear.html"      class="nav__link">Gear</a></li>
+          <li role="listitem"><a href="about.html"     class="nav__link">About</a></li>
+          <li role="listitem"><a href="contact.html"   class="nav__link">Contact</a></li>
         </ul>
         <button class="hamburger" id="hamburger-btn" aria-label="Open navigation menu" aria-expanded="false" aria-controls="nav-list">
           <i class="ph ph-list" aria-hidden="true" style="font-size:1.5rem;"></i>
@@ -119,18 +116,25 @@
 
         <div class="grid grid--3">
 
-          <!-- Card 1 -->
+          <!-- Card 1 — Haritha Kanda -->
           <article class="camp-card" data-camp="haritha-kanda" data-district="nuwara-eliya" data-name="Haritha Kanda" data-category="Mountain">
             <div style="position:relative;">
               <span class="badge badge--mountain" style="left:1rem;top:1rem;">Mountain</span>
               <span class="badge" style="left:6rem;top:1rem;background:#bd8638;color:#fff;position:absolute;">Moderate</span>
-              <button style="position:absolute;right:1rem;top:1rem;background:rgba(0,0,0,0.5);border:none;border-radius:50%;width:32px;height:32px;color:#fff;cursor:pointer;display:flex;align-items:center;justify-content:center;backdrop-filter:blur(4px);" aria-label="Save Haritha Kanda to favourites">
+              <button class="camp-card-fav" aria-label="Save Haritha Kanda to favourites">
                 <i class="ph ph-heart" aria-hidden="true"></i>
               </button>
-              <img src="images\distict\Nuwara Eliya\haritha kanda.jpg" alt="Great Western Mountain plateau at sunrise" class="camp-card-img" loading="lazy" width="400" height="200" />
-              <div style="position:absolute;bottom:1rem;left:1rem;color:#fff;font-weight:600;display:flex;align-items:center;gap:0.3rem;">
+              <img
+                src="images/distict/Nuwara Eliya/haritha kanda.jpg"
+                alt="Haritha Kanda lush mountain at sunrise"
+                class="camp-card-img"
+                loading="lazy"
+                width="400"
+                height="200"
+              />
+              <div class="camp-card-rating">
                 <i class="ph-fill ph-star" style="color:#FFD700;" aria-hidden="true"></i> 4.9
-                <span style="font-size:0.8rem;font-weight:400;opacity:0.8;">(342)</span>
+                <span class="rating-count">(342)</span>
               </div>
             </div>
             <div class="camp-card-body">
@@ -138,42 +142,49 @@
               <div class="camp-card-meta" style="margin-bottom:1rem;">
                 <span><i class="ph ph-map-pin" aria-hidden="true"></i> Nuwara Eliya, Sri Lanka</span>
               </div>
-              <p class="camp-desc">A peaceful mountain known for its lush forests and camping opportunities. The hike is moderately difficult with beautiful sunrise viewpoints and rich biodiversity. </p>
-              <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:0.5rem;margin-top:1rem;">
-                <div style="background:rgba(255,255,255,0.03);padding:0.8rem 0.2rem;border-radius:12px;text-align:center;border:1px solid rgba(255,255,255,0.05);">
+              <p class="camp-desc">A peaceful mountain known for its lush forests and camping opportunities. Beautiful sunrise viewpoints and rich biodiversity await.</p>
+              <div class="camp-stat-grid">
+                <div class="camp-stat-box">
                   <i class="ph ph-mountains" style="color:var(--color-text-light);font-size:1.2rem;" aria-hidden="true"></i>
-                  <div style="font-weight:600;font-size:0.85rem;color:#fff;">1,050 m </div>
-                  <div style="font-size:0.7rem;color:var(--color-text-light);">Elevation</div>
+                  <span class="camp-stat-value">1,050 m</span>
+                  <span class="camp-stat-label">Elevation</span>
                 </div>
-                <div style="background:rgba(255,255,255,0.03);padding:0.8rem 0.2rem;border-radius:12px;text-align:center;border:1px solid rgba(255,255,255,0.05);">
+                <div class="camp-stat-box">
                   <i class="ph ph-thermometer" style="color:var(--color-text-light);font-size:1.2rem;" aria-hidden="true"></i>
-                  <div style="font-weight:600;font-size:0.85rem;color:#fff;">Cool</div>
-                  <div style="font-size:0.7rem;color:var(--color-text-light);">Weather</div>
+                  <span class="camp-stat-value">Cool</span>
+                  <span class="camp-stat-label">Weather</span>
                 </div>
-                <div style="background:rgba(255,255,255,0.03);padding:0.8rem 0.2rem;border-radius:12px;text-align:center;border:1px solid rgba(255,255,255,0.05);">
+                <div class="camp-stat-box">
                   <i class="ph ph-calendar-blank" style="color:var(--color-text-light);font-size:1.2rem;" aria-hidden="true"></i>
-                  <div style="font-weight:600;font-size:0.85rem;color:#fff;">Dec – Mar</div>
-                  <div style="font-size:0.7rem;color:var(--color-text-light);">Best Season</div>
+                  <span class="camp-stat-value">Dec – Mar</span>
+                  <span class="camp-stat-label">Best Season</span>
                 </div>
               </div>
-              <button class="btn btn--outline" style="width:100%;margin-top:1.5rem;border-radius:12px;border-color:rgba(255,255,255,0.1);color:#fff;" onclick="openCampsiteModal('haritha-kanda')" aria-label="Explore Haritha Kanda campsite details">
+              <button class="btn btn--outline" style="width:100%;margin-top:1.5rem;border-radius:12px;" onclick="openCampsiteModal('haritha-kanda')" aria-label="Explore Haritha Kanda campsite details">
                 Explore Camp <i class="ph ph-caret-right" style="vertical-align:middle;" aria-hidden="true"></i>
               </button>
             </div>
           </article>
 
-          <!-- Card 2 -->
-          <article class="camp-card" data-camp="bambaragala" data-district="badulla" data-name="Bambaragala" data-category=" Mountain">
+          <!-- Card 2 — Bambaragala -->
+          <article class="camp-card" data-camp="bambaragala" data-district="badulla" data-name="Bambaragala" data-category="Mountain">
             <div style="position:relative;">
-              <span class="badge" style="left:1rem;top:1rem;background:#2a6b57;color:#fff;position:absolute;"> Mountain</span>
-              <span class="badge" style="left:6.2rem;top:1rem;background:#e06c6c;color:#fff;position:absolute;">Challenging</span>
-              <button style="position:absolute;right:1rem;top:1rem;background:rgba(0,0,0,0.5);border:none;border-radius:50%;width:32px;height:32px;color:#fff;cursor:pointer;display:flex;align-items:center;justify-content:center;backdrop-filter:blur(4px);" aria-label="Save Knuckles Haritha Kanda to favourites">
+              <span class="badge" style="left:1rem;top:1rem;background:#2a6b57;color:#fff;position:absolute;">Mountain</span>
+              <span class="badge" style="left:6.2rem;top:1rem;background:#e06c6c;color:#fff;position:absolute;">Hard</span>
+              <button class="camp-card-fav" aria-label="Save Bambaragala to favourites">
                 <i class="ph ph-heart" aria-hidden="true"></i>
               </button>
-              <img src="images/distict/Badulla/bambaragala.jpg" alt="Bambaragala cliff with panoramic mountain views" class="camp-card-img" loading="lazy" width="400" height="200" />
-              <div style="position:absolute;bottom:1rem;left:1rem;color:#fff;font-weight:600;display:flex;align-items:center;gap:0.3rem;">
+              <img
+                src="images/distict/Badulla/bambaragala.jpg"
+                alt="Bambaragala cliff with panoramic mountain views"
+                class="camp-card-img"
+                loading="lazy"
+                width="400"
+                height="200"
+              />
+              <div class="camp-card-rating">
                 <i class="ph-fill ph-star" style="color:#FFD700;" aria-hidden="true"></i> 4.8
-                <span style="font-size:0.8rem;font-weight:400;opacity:0.8;">(218)</span>
+                <span class="rating-count">(218)</span>
               </div>
             </div>
             <div class="camp-card-body">
@@ -181,42 +192,49 @@
               <div class="camp-card-meta" style="margin-bottom:1rem;">
                 <span><i class="ph ph-map-pin" aria-hidden="true"></i> Badulla, Sri Lanka</span>
               </div>
-              <p class="camp-desc">A scenic mountain surrounded by forests and tea estates. The trail features steep sections and rewarding panoramic views, making it suitable for hikers with moderate experience.</p>
-              <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:0.5rem;margin-top:1rem;">
-                <div style="background:rgba(255,255,255,0.03);padding:0.8rem 0.2rem;border-radius:12px;text-align:center;border:1px solid rgba(255,255,255,0.05);">
+              <p class="camp-desc">A scenic mountain surrounded by forests and tea estates with steep sections and rewarding panoramic views.</p>
+              <div class="camp-stat-grid">
+                <div class="camp-stat-box">
                   <i class="ph ph-mountains" style="color:var(--color-text-light);font-size:1.2rem;" aria-hidden="true"></i>
-                  <div style="font-weight:600;font-size:0.85rem;color:#fff;">609 m </div>
-                  <div style="font-size:0.7rem;color:var(--color-text-light);">Elevation</div>
+                  <span class="camp-stat-value">609 m</span>
+                  <span class="camp-stat-label">Elevation</span>
                 </div>
-                <div style="background:rgba(255,255,255,0.03);padding:0.8rem 0.2rem;border-radius:12px;text-align:center;border:1px solid rgba(255,255,255,0.05);">
+                <div class="camp-stat-box">
                   <i class="ph ph-thermometer" style="color:var(--color-text-light);font-size:1.2rem;" aria-hidden="true"></i>
-                  <div style="font-weight:600;font-size:0.85rem;color:#fff;">Cool</div>
-                  <div style="font-size:0.7rem;color:var(--color-text-light);">Weather</div>
+                  <span class="camp-stat-value">Cool</span>
+                  <span class="camp-stat-label">Weather</span>
                 </div>
-                <div style="background:rgba(255,255,255,0.03);padding:0.8rem 0.2rem;border-radius:12px;text-align:center;border:1px solid rgba(255,255,255,0.05);">
+                <div class="camp-stat-box">
                   <i class="ph ph-calendar-blank" style="color:var(--color-text-light);font-size:1.2rem;" aria-hidden="true"></i>
-                  <div style="font-weight:600;font-size:0.85rem;color:#fff;">Jan – Apr</div>
-                  <div style="font-size:0.7rem;color:var(--color-text-light);">Best Season</div>
+                  <span class="camp-stat-value">Jan – Apr</span>
+                  <span class="camp-stat-label">Best Season</span>
                 </div>
               </div>
-              <button class="btn btn--outline" style="width:100%;margin-top:1.5rem;border-radius:12px;border-color:rgba(255,255,255,0.1);color:#fff;" onclick="openCampsiteModal('bambaragala')" aria-label="Explore Bambaragala campsite details">
+              <button class="btn btn--outline" style="width:100%;margin-top:1.5rem;border-radius:12px;" onclick="openCampsiteModal('bambaragala')" aria-label="Explore Bambaragala campsite details">
                 Explore Camp <i class="ph ph-caret-right" style="vertical-align:middle;" aria-hidden="true"></i>
               </button>
             </div>
           </article>
 
-          <!-- Card 3 -->
-          <article class="camp-card" data-camp="narangala" data-district="badulla" data-name="Narangala Mountain" data-category="Family">
+          <!-- Card 3 — Narangala -->
+          <article class="camp-card" data-camp="narangala" data-district="badulla" data-name="Narangala Mountain" data-category="Mountain">
             <div style="position:relative;">
               <span class="badge" style="left:1rem;top:1rem;background:#3c7d5c;color:#fff;position:absolute;">Mountain</span>
               <span class="badge" style="left:5rem;top:1rem;background:#5db379;color:#fff;position:absolute;">Easy</span>
-              <button style="position:absolute;right:1rem;top:1rem;background:rgba(0,0,0,0.5);border:none;border-radius:50%;width:32px;height:32px;color:#fff;cursor:pointer;display:flex;align-items:center;justify-content:center;backdrop-filter:blur(4px);" aria-label="Save Bambaragala to favourites">
+              <button class="camp-card-fav" aria-label="Save Narangala to favourites">
                 <i class="ph ph-heart" aria-hidden="true"></i>
               </button>
-              <img src="images/distict/Badulla/Narangala Mountain.jpg" alt="Narangala Mountain with panoramic valley views" class="camp-card-img" loading="lazy" width="400" height="200" />
-              <div style="position:absolute;bottom:1rem;left:1rem;color:#fff;font-weight:600;display:flex;align-items:center;gap:0.3rem;">
-                <i class="ph-fill ph-star" style="color:#FFD700;" aria-hidden="true"></i> 4.7
-                <span style="font-size:0.8rem;font-weight:400;opacity:0.8;">(456)</span>
+              <img
+                src="images/distict/Badulla/Narangala Mountain.jpg"
+                alt="Narangala Mountain with panoramic valley views"
+                class="camp-card-img"
+                loading="lazy"
+                width="400"
+                height="200"
+              />
+              <div class="camp-card-rating">
+                <i class="ph-fill ph-star" style="color:#FFD700;" aria-hidden="true"></i> 4.9
+                <span class="rating-count">(456)</span>
               </div>
             </div>
             <div class="camp-card-body">
@@ -224,34 +242,36 @@
               <div class="camp-card-meta" style="margin-bottom:1rem;">
                 <span><i class="ph ph-map-pin" aria-hidden="true"></i> Badulla District, Sri Lanka</span>
               </div>
-              <p class="camp-desc">One of Sri Lanka's most popular camping mountains. The trail includes rocky climbs and spectacular sunrise views over the surrounding valleys.</p>
-              <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:0.5rem;margin-top:1rem;">
-                <div style="background:rgba(255,255,255,0.03);padding:0.8rem 0.2rem;border-radius:12px;text-align:center;border:1px solid rgba(255,255,255,0.05);">
+              <p class="camp-desc">One of Sri Lanka's most popular camping mountains with rocky climbs and spectacular 360° sunrise views.</p>
+              <div class="camp-stat-grid">
+                <div class="camp-stat-box">
                   <i class="ph ph-mountains" style="color:var(--color-text-light);font-size:1.2rem;" aria-hidden="true"></i>
-                  <div style="font-weight:600;font-size:0.85rem;color:#fff;">1,530 m </div>
-                  <div style="font-size:0.7rem;color:var(--color-text-light);">Elevation</div>
+                  <span class="camp-stat-value">1,530 m</span>
+                  <span class="camp-stat-label">Elevation</span>
                 </div>
-                <div style="background:rgba(255,255,255,0.03);padding:0.8rem 0.2rem;border-radius:12px;text-align:center;border:1px solid rgba(255,255,255,0.05);">
+                <div class="camp-stat-box">
                   <i class="ph ph-thermometer" style="color:var(--color-text-light);font-size:1.2rem;" aria-hidden="true"></i>
-                  <div style="font-weight:600;font-size:0.85rem;color:#fff;">Cool</div>
-                  <div style="font-size:0.7rem;color:var(--color-text-light);">Weather</div>
+                  <span class="camp-stat-value">Cool</span>
+                  <span class="camp-stat-label">Weather</span>
                 </div>
-                <div style="background:rgba(255,255,255,0.03);padding:0.8rem 0.2rem;border-radius:12px;text-align:center;border:1px solid rgba(255,255,255,0.05);">
+                <div class="camp-stat-box">
                   <i class="ph ph-calendar-blank" style="color:var(--color-text-light);font-size:1.2rem;" aria-hidden="true"></i>
-                  <div style="font-weight:600;font-size:0.85rem;color:#fff;">Jan – Apr</div>
-                  <div style="font-size:0.7rem;color:var(--color-text-light);">Best Season</div>
+                  <span class="camp-stat-value">Jan – Apr</span>
+                  <span class="camp-stat-label">Best Season</span>
                 </div>
               </div>
-              <button class="btn btn--outline" style="width:100%;margin-top:1.5rem;border-radius:12px;border-color:rgba(255,255,255,0.1);color:#fff;" onclick="openCampsiteModal('narangala')" aria-label="Explore Narangala Mountain campsite details">
+              <button class="btn btn--outline" style="width:100%;margin-top:1.5rem;border-radius:12px;" onclick="openCampsiteModal('narangala')" aria-label="Explore Narangala Mountain campsite details">
                 Explore Camp <i class="ph ph-caret-right" style="vertical-align:middle;" aria-hidden="true"></i>
               </button>
             </div>
           </article>
-          <div class="section__action">
-          <a href="campsites.html" class="btn btn--primary">All campaites</a>
-        </div>
 
         </div>
+
+        <div class="section__action">
+          <a href="campsites.html" class="btn btn--primary">All Campsites</a>
+        </div>
+
       </div>
     </section>
 
@@ -284,10 +304,10 @@
           <div class="gear-card">
             <img src="images/Gear/LED Camping Lantern.jpg" alt="LED Camping Lantern — rechargeable via solar or USB" loading="lazy" width="80" height="80" />
             <div class="gear-card__info">
-              <h4>LED Headlamp</h4>
+              <h4>LED Camping Lantern</h4>
               <p>Ultra-bright, long battery</p>
               <span class="badge badge--buy">Buy</span>
-              <button class="btn btn--primary btn-action" style="margin-top:0.5rem;width:100%;padding:0.4rem;font-size:0.85rem;" onclick="addToCart(event, this)" aria-label="Add LED Headlamp to cart">Add to Cart</button>
+              <button class="btn btn--primary btn-action" style="margin-top:0.5rem;width:100%;padding:0.4rem;font-size:0.85rem;" onclick="addToCart(event, this)" aria-label="Add LED Camping Lantern to cart">Add to Cart</button>
             </div>
           </div>
 

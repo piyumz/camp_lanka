@@ -7,10 +7,9 @@
   <title>About Us – Camp Lanka</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="css/style.css" />
   <link rel="icon" href="favicon.png">
-  <!-- Phosphor Icons -->
   <script src="https://unpkg.com/@phosphor-icons/web"></script>
 </head>
 <body>
@@ -21,12 +20,11 @@
       <a href="index.html" class="logo" aria-label="Camp Lanka – Home">Camp Lanka</a>
       <nav class="nav" role="navigation" aria-label="Main navigation">
         <ul class="nav__list" id="nav-list" role="list">
-          <li role="listitem"><a href="index.html"      class="nav__link">Home</a></li>
-          <li role="listitem"><a href="campsites.html"  class="nav__link">Campsites</a></li>
-          <li role="listitem"><a href="gear.html"       class="nav__link">Gear</a></li>
-          <li role="listitem"><a href="about.html"      class="nav__link active" aria-current="page">About</a></li>
-          <!--<li role="listitem"><a href="reviews.html"    class="nav__link">Reviews</a></li>-->
-          <li role="listitem"><a href="contact.html"    class="nav__link">Contact</a></li>
+          <li role="listitem"><a href="index.html"     class="nav__link">Home</a></li>
+          <li role="listitem"><a href="campsites.html" class="nav__link">Campsites</a></li>
+          <li role="listitem"><a href="gear.html"      class="nav__link">Gear</a></li>
+          <li role="listitem"><a href="about.html"     class="nav__link active" aria-current="page">About</a></li>
+          <li role="listitem"><a href="contact.html"   class="nav__link">Contact</a></li>
         </ul>
         <button class="hamburger" id="hamburger-btn" aria-label="Open navigation menu" aria-expanded="false" aria-controls="nav-list">
           <i class="ph ph-list" aria-hidden="true" style="font-size:1.5rem;"></i>
@@ -35,7 +33,7 @@
     </div>
   </header>
 
-  <main style="padding-top:5rem;">
+  <main class="page-main">
 
     <!-- ===== MISSION & VISION ===== -->
     <section class="section" aria-labelledby="about-heading">
@@ -43,18 +41,24 @@
         <h1 class="section__title" id="about-heading">About Camp Lanka</h1>
         <div class="about-grid">
           <div>
-            <h2 style="color:var(--color-primary);margin-bottom:0.75rem;font-size:1.5rem;">Our Mission</h2>
-            <p style="margin-bottom:1.5rem;color:var(--color-text-light);">
+            <h2 style="color:var(--color-primary);margin-bottom:0.75rem;font-size:1.5rem;letter-spacing:-0.02em;">Our Mission</h2>
+            <p style="margin-bottom:1.5rem;color:var(--color-text-light);line-height:1.75;">
               To provide a comprehensive, easy‑to‑use platform that connects adventure seekers with the most stunning
               and safe camping locations in Sri Lanka, while promoting sustainable and responsible eco‑tourism.
             </p>
-            <h2 style="color:var(--color-primary);margin-bottom:0.75rem;font-size:1.5rem;">Our Vision</h2>
-            <p style="color:var(--color-text-light);">
+            <h2 style="color:var(--color-primary);margin-bottom:0.75rem;font-size:1.5rem;letter-spacing:-0.02em;">Our Vision</h2>
+            <p style="color:var(--color-text-light);line-height:1.75;">
               To be the premier online destination for all outdoor enthusiasts exploring the pearl of the Indian Ocean,
               ensuring every camper is well‑equipped and fully informed before embarking on their journey.
             </p>
           </div>
-          <img src="https://images.unsplash.com/photo-1496080174650-637e3f22fa03?q=80&w=2000&auto=format&fit=crop" alt="Campers enjoying a misty morning in Sri Lanka's highlands" loading="lazy" />
+          <img
+            src="https://images.unsplash.com/photo-1496080174650-637e3f22fa03?q=80&w=2000&auto=format&fit=crop"
+            alt="Campers enjoying a misty morning in Sri Lanka's highlands"
+            loading="lazy"
+            width="600"
+            height="300"
+          />
         </div>
       </div>
     </section>
@@ -67,26 +71,25 @@
 
           <div class="card" style="padding:2.5rem 2rem;text-align:center;">
             <i class="ph ph-mountains about-feature-icon" aria-hidden="true"></i>
-            <h3 style="color:var(--color-primary);margin-bottom:0.75rem;">Diverse Landscapes</h3>
+            <h3 style="color:var(--color-primary);margin-bottom:0.75rem;letter-spacing:-0.01em;">Diverse Landscapes</h3>
             <p style="color:var(--color-text-light);">From misty highlands to dry‑zone wildlife parks and golden beaches — experience multiple climates within hours.</p>
           </div>
 
           <div class="card" style="padding:2.5rem 2rem;text-align:center;">
             <i class="ph ph-leaf about-feature-icon" aria-hidden="true"></i>
-            <h3 style="color:var(--color-primary);margin-bottom:0.75rem;">Rich Biodiversity</h3>
+            <h3 style="color:var(--color-primary);margin-bottom:0.75rem;letter-spacing:-0.01em;">Rich Biodiversity</h3>
             <p style="color:var(--color-text-light);">Camp near some of the highest densities of leopards and elephants in the world — all within a compact island.</p>
           </div>
 
           <div class="card" style="padding:2.5rem 2rem;text-align:center;">
             <i class="ph ph-building-columns about-feature-icon" aria-hidden="true"></i>
-            <h3 style="color:var(--color-primary);margin-bottom:0.75rem;">Cultural Heritage</h3>
+            <h3 style="color:var(--color-primary);margin-bottom:0.75rem;letter-spacing:-0.01em;">Cultural Heritage</h3>
             <p style="color:var(--color-text-light);">Many campsites are located near ancient ruins and UNESCO World Heritage monuments steeped in 2,500 years of history.</p>
           </div>
 
         </div>
       </div>
     </section>
-
 
   </main>
 

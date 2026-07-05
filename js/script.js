@@ -1,33 +1,24 @@
 /**
  * Camp Lanka — Main JavaScript
- * Handles: Navigation, Search, Filters, Carousel, Forms, Modals
+ * Handles: Navigation, Search, Filters, Forms, Modals
  */
 
 /* ============================================================
    UTILITY HELPERS
    ============================================================ */
 
-/**
- * Shorthand querySelector
- * @param {string} selector
- * @param {Element} [ctx=document]
- */
+/** Shorthand querySelector */
 const $ = (selector, ctx = document) => ctx.querySelector(selector);
 
-/**
- * Shorthand querySelectorAll
- * @param {string} selector
- * @param {Element} [ctx=document]
- */
+/** Shorthand querySelectorAll */
 const $$ = (selector, ctx = document) => ctx.querySelectorAll(selector);
 
 /**
- * Show a toast notification to replace alert()
+ * Show a toast notification
  * @param {string} message
  * @param {'success'|'error'} [type='success']
  */
 function showToast(message, type = 'success') {
-  // Remove any existing toast
   const existing = $('#cl-toast');
   if (existing) existing.remove();
 
@@ -45,24 +36,15 @@ function showToast(message, type = 'success') {
   `;
 
   document.body.appendChild(toast);
-
-  // Animate in
   requestAnimationFrame(() => toast.classList.add('cl-toast--visible'));
 
-  // Auto-dismiss after 4 s
   const timer = setTimeout(() => dismissToast(toast), 4000);
-
-  // Manual close
   toast.querySelector('.cl-toast__close').addEventListener('click', () => {
     clearTimeout(timer);
     dismissToast(toast);
   });
 }
 
-/**
- * Animate toast out and remove it
- * @param {HTMLElement} toast
- */
 function dismissToast(toast) {
   toast.classList.remove('cl-toast--visible');
   toast.addEventListener('transitionend', () => toast.remove(), { once: true });
@@ -72,15 +54,6 @@ function dismissToast(toast) {
    NAVIGATION — Hamburger Menu
    ============================================================ */
 
-/**
- * Initialise the mobile hamburger menu with:
- * - Smooth CSS-driven open/close animation
- * - Close on outside click
- * - Close on nav link click
- * - Close when resized to desktop (≥ 769 px)
- * - Body scroll lock while open
- * - Proper aria-expanded state
- */
 function initNavigation() {
   const hamburger = $('.hamburger');
   const navList = $('.nav__list');
@@ -88,7 +61,6 @@ function initNavigation() {
 
   if (!hamburger || !navList) return;
 
-  /** Toggle open/closed state */
   function openMenu() {
     navList.classList.add('active');
     hamburger.setAttribute('aria-expanded', 'true');
@@ -107,31 +79,23 @@ function initNavigation() {
     return navList.classList.contains('active');
   }
 
-  // Hamburger click
   hamburger.addEventListener('click', (e) => {
     e.stopPropagation();
     isMenuOpen() ? closeMenu() : openMenu();
   });
 
-  // Close when a nav link is clicked
   $$('.nav__link', navList).forEach(link => {
     link.addEventListener('click', () => closeMenu());
   });
 
-  // Close on outside click (document level)
   document.addEventListener('click', (e) => {
-    if (isMenuOpen() && !nav.contains(e.target)) {
-      closeMenu();
-    }
+    if (isMenuOpen() && !nav.contains(e.target)) closeMenu();
   });
 
-  // Close when resized to desktop breakpoint
-  const mql = window.matchMedia('(min-width: 769px)');
-  mql.addEventListener('change', (e) => {
+  window.matchMedia('(min-width: 769px)').addEventListener('change', (e) => {
     if (e.matches && isMenuOpen()) closeMenu();
   });
 
-  // Support Escape key
   document.addEventListener('keydown', (e) => {
     if (e.key === 'Escape' && isMenuOpen()) {
       closeMenu();
@@ -163,10 +127,10 @@ const CAMPSITE_DATA = [
     name: 'Bambaragala',
     district: 'badulla',
     location: 'Badulla',
-    category: 'Adventure',
+    category: 'Mountain',
     difficulty: 'Hard',
-    rating: 4.5,
-    season: 'Dec – Apr',
+    rating: 4.8,
+    season: 'Jan – Apr',
     desc: 'Features a sharp cliff edge offering clear vistas of nearby mountains.',
     img: 'images/distict/Badulla/bambaragala.jpg'
   },
@@ -176,7 +140,7 @@ const CAMPSITE_DATA = [
     district: 'badulla',
     location: 'Badulla',
     category: 'Mountain',
-    difficulty: 'Moderate',
+    difficulty: 'Easy',
     rating: 4.9,
     season: 'Feb – Jul',
     desc: 'Pure magic with a sea of clouds and a killer 360-degree sunrise.',
@@ -185,14 +149,14 @@ const CAMPSITE_DATA = [
   {
     id: 'haritha-kanda',
     name: 'Haritha Kanda',
-    district: 'badulla',
-    location: 'Badulla',
-    category: 'Family',
-    difficulty: 'Easy',
-    rating: 4.8,
-    season: 'Jan – May',
+    district: 'nuwara-eliya',
+    location: 'Nuwara Eliya',
+    category: 'Mountain',
+    difficulty: 'Moderate',
+    rating: 4.9,
+    season: 'Dec – Mar',
     desc: 'Scenic rocky mountain celebrated for its lush pastures and misty landscapes.',
-    img: 'images/distict/Badulla/haritha kanda.jpg'
+    img: 'images/distict/Nuwara Eliya/haritha kanda.jpg'
   },
   {
     id: 'hanthana',
@@ -201,8 +165,8 @@ const CAMPSITE_DATA = [
     location: 'Kandy',
     category: 'Mountain',
     difficulty: 'Moderate',
-    rating: 4.6,
-    season: 'Dec – Apr',
+    rating: 4.7,
+    season: 'Jan – Mar',
     desc: 'Set up base camps on open rocky plateaus near the summits.',
     img: 'images/distict/kandy/Hanthana.jpg'
   },
@@ -212,109 +176,132 @@ const CAMPSITE_DATA = [
     district: 'kandy',
     location: 'Kandy',
     category: 'Forest',
-    difficulty: 'Easy',
-    rating: 4.9,
-    season: 'Jan – Apr',
-    desc: 'Serene camping amidst towering pine trees with crisp mountain air.',
+    difficulty: 'Hard',
+    rating: 4.0,
+    season: 'Jan – Mar',
+    desc: 'A remote mountain village surrounded by the Knuckles Range.',
     img: 'images/distict/kandy/meemure.webp'
+  },
+  {
+    id: 'alagalla',
+    name: 'Alagalla Mountain Range',
+    district: 'kegalla',
+    location: 'Kegalla',
+    category: 'Mountain',
+    difficulty: 'Moderate',
+    rating: 3.5,
+    season: 'Jan – Mar',
+    desc: 'A historic rock fortress mountain with panoramic summit views.',
+    img: 'images/distict/Kegalle/A_view_from_Alagalla_Mountain_Range.jpg'
+  },
+  {
+    id: 'baththalangunduwa',
+    name: 'Baththalangunduwa',
+    district: 'puttalam',
+    location: 'Puttalam',
+    category: 'Beach',
+    difficulty: 'Moderate',
+    rating: 4.5,
+    season: 'Jan – Sep',
+    desc: 'A remote fisherman\'s island with pristine beaches and starlit camping.',
+    img: 'images/distict/Puttalam/Baththalangunduwa.jpg'
+  },
+  {
+    id: 'knuckles-base',
+    name: 'Knuckles Base',
+    district: 'matale',
+    location: 'Matale',
+    category: 'Mountain',
+    difficulty: 'Hard',
+    rating: 4.4,
+    season: 'Jan – Mar',
+    desc: 'Gateway to a UNESCO World Heritage forest with diverse trekking routes.',
+    img: 'images/distict/Matale/Knuckles_Range.jpg'
   }
 ];
 
 /* ============================================================
    HERO SEARCH (index.html)
-   Reads the destination input, category & difficulty selects,
-   then navigates to campsites.html with query parameters.
    ============================================================ */
 
 function initHeroSearch() {
   const form = $('#heroSearchForm');
-  const searchBtn = $('#heroSearchBtn');
+  if (!form) return;
+
   const destInput = $('#searchDestination');
+  const catSelect = $('#searchCategory');
+  const diffSelect = $('#searchDifficulty');
 
-  if (!searchBtn || !destInput) return;
-
-  function doSearch() {
-    const dest = destInput.value.trim();
-    const cat = $('#searchCategory')?.value || '';
-    const diff = $('#searchDifficulty')?.value || '';
+  function doSearch(e) {
+    if (e) e.preventDefault();
+    const dest = destInput?.value.trim() || '';
+    const cat  = catSelect?.value || '';
+    const diff = diffSelect?.value || '';
 
     const params = new URLSearchParams();
     if (dest) params.set('q', dest);
-    if (cat && cat !== 'Any type') params.set('category', cat);
-    if (diff && diff !== 'Easy') params.set('difficulty', diff);
+    if (cat)  params.set('category', cat);
+    if (diff) params.set('difficulty', diff);
 
     window.location.href = 'campsites.html' + (params.toString() ? '?' + params.toString() : '');
   }
 
-  searchBtn.addEventListener('click', doSearch);
+  form.addEventListener('submit', doSearch);
 
-  // Allow Enter key in destination input
-  destInput.addEventListener('keydown', (e) => {
-    if (e.key === 'Enter') doSearch();
+  destInput?.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter') doSearch(e);
   });
 }
 
 /* ============================================================
    CAMPSITE SEARCH + FILTER (campsites.html)
-   Real-time filtering by search text and district filter buttons.
-   Shows a "No campsites found" empty state when nothing matches.
    ============================================================ */
 
 function initCampsiteSearch() {
-  const grid = $('#campsite-grid');
+  const grid        = $('#campsite-grid');
   const searchInput = $('#campsiteSearch');
-  const clearBtn = $('#campsiteSearchClear');
-  const emptyState = $('#campsiteEmpty');
-  const filterBtns = $$('.filter-btn');
-  const cards = $$('.camp-card', grid);
+  const clearBtn    = $('#campsiteSearchClear');
+  const emptyState  = $('#campsiteEmpty');
+  const filterBtns  = $$('.filter-btn');
+  const cards       = grid ? $$('.camp-card', grid) : [];
 
   if (!grid || !searchInput) return;
 
-  let activeDistrict = 'all';
+  let activeFilter = 'all';
 
-  /** Apply both district filter + text search at once */
   function applyFilters() {
     const query = searchInput.value.trim().toLowerCase();
 
-    // Show/hide clear button
     if (clearBtn) clearBtn.style.display = query ? 'flex' : 'none';
 
     let visibleCount = 0;
 
     cards.forEach(card => {
-      const district = card.dataset.district || '';
-      const name = (card.dataset.name || '').toLowerCase();
-      const desc = (card.querySelector('.camp-desc')?.textContent || '').toLowerCase();
+      const district = (card.dataset.district || '').trim().toLowerCase();
+      const name     = (card.dataset.name     || '').toLowerCase();
+      const category = (card.dataset.category || '').trim().toLowerCase();
+      const desc     = (card.querySelector('.camp-desc')?.textContent || '').toLowerCase();
       const location = (card.querySelector('.camp-card-meta span')?.textContent || '').toLowerCase();
-      const category = (card.dataset.category || '').toLowerCase();
 
-      // District filter
-      const districtMatch = activeDistrict === 'all' || district === activeDistrict;
-      // Text search — case-insensitive, matches name, desc, location, category
-      const textMatch = !query || name.includes(query) || desc.includes(query) ||
-                        location.includes(query) || category.includes(query);
+      const filterMatch = activeFilter === 'all' || district === activeFilter;
+      const textMatch   = !query ||
+        name.includes(query)     ||
+        desc.includes(query)     ||
+        location.includes(query) ||
+        category.includes(query);
 
-      const show = districtMatch && textMatch;
+      const show = filterMatch && textMatch;
       card.style.display = show ? '' : 'none';
-      // Add/remove animation class
-      if (show) {
-        card.classList.add('card-visible');
-        visibleCount++;
-      } else {
-        card.classList.remove('card-visible');
-      }
+      if (show) visibleCount++;
     });
 
-    // Show empty state
     if (emptyState) {
       emptyState.style.display = visibleCount === 0 ? 'block' : 'none';
     }
   }
 
-  // Real-time search input
   searchInput.addEventListener('input', applyFilters);
 
-  // Clear search
   if (clearBtn) {
     clearBtn.addEventListener('click', () => {
       searchInput.value = '';
@@ -323,145 +310,30 @@ function initCampsiteSearch() {
     });
   }
 
-  // District filter buttons
   filterBtns.forEach(btn => {
     btn.addEventListener('click', () => {
-      filterBtns.forEach(b => b.classList.remove('active'));
+      filterBtns.forEach(b => {
+        b.classList.remove('active');
+        b.setAttribute('aria-pressed', 'false');
+      });
       btn.classList.add('active');
-      activeDistrict = btn.dataset.filter;
+      btn.setAttribute('aria-pressed', 'true');
+      activeFilter = btn.dataset.filter;
       applyFilters();
     });
   });
 
-  // Handle URL query params (from hero search on index.html)
+  // Handle URL query params from hero search
   const params = new URLSearchParams(window.location.search);
-  const q = params.get('q');
-  const cat = params.get('category');
+  const q    = params.get('q');
+  const cat  = params.get('category');
   const diff = params.get('difficulty');
 
-  if (q) {
-    searchInput.value = q;
-  }
+  if (q)    searchInput.value = q;
+  if (cat)  searchInput.value = searchInput.value || cat;
+  if (diff) searchInput.value = searchInput.value || diff;
 
-  // Apply on load (handles URL params)
   applyFilters();
-}
-
-/* ============================================================
-   NEARBY GEAR LINKING (campsites.html)
-   ============================================================ */
-
-const GEAR_DB = {
-  'nuwara-eliya': [
-    { name: 'Thermal Sleeping Bag', type: 'Rent', price: 'Rs. 1,500/day', img: 'images/Gear/Thermal Sleeping Bag.jpg', desc: 'Sub-zero rated.' },
-    { name: 'Alpine Tent (2P)', type: 'Rent', price: 'Rs. 3,000/day', img: 'images/Gear/4-Person Dome Tent.jpg', desc: 'Wind & rain resistant.' }
-  ],
-  'kandy': [
-    { name: 'Standard Tent', type: 'Rent', price: 'Rs. 2,000/day', img: 'images/Gear/4-Person Dome Tent.jpg', desc: 'Good for mild weather.' },
-    { name: 'Portable Stove', type: 'Rent/Buy', price: 'Rs. 500/day', img: 'images/Gear/Portable Gas Stove.jpg', desc: 'Compact gas stove.' }
-  ],
-  'yala': [
-    { name: 'Safari Chair', type: 'Rent', price: 'Rs. 800/day', img: 'images/Gear/Foldable Camping Chair.jpg', desc: 'Comfortable foldable.' },
-    { name: 'Cooler Box', type: 'Rent', price: 'Rs. 600/day', img: 'images/Gear/LED Camping Lantern.jpg', desc: 'Keeps drinks cold.' }
-  ],
-  'badulla': [
-    { name: 'Hiking Poles', type: 'Rent', price: 'Rs. 400/day', img: 'images/Gear/65L Trekking Backpack.jpg', desc: 'Lightweight and sturdy.' },
-    { name: 'Headlamp', type: 'Buy', price: 'Rs. 2,500', img: 'images/Gear/LED Camping Lantern.jpg', desc: 'Ultra-bright LED.' }
-  ]
-};
-
-const DEFAULT_GEAR = [
-  { name: 'Basic Headlamp', type: 'Buy', price: 'Rs. 2,500', img: 'images/Gear/LED Camping Lantern.jpg', desc: 'Essential for any trip.' },
-  { name: 'Camping Chair', type: 'Rent', price: 'Rs. 800/day', img: 'images/Gear/Foldable Camping Chair.jpg', desc: 'Foldable and lightweight.' }
-];
-
-function initNearbyGear() {
-  const gearContainer = $('#gearPlaceholders');
-  const cards = $$('.camp-card');
-
-  if (!cards.length || !gearContainer) return;
-
-  cards.forEach(card => {
-    card.addEventListener('click', function () {
-      const district = this.dataset.district;
-      const items = GEAR_DB[district] || DEFAULT_GEAR;
-
-      const html = items.map(item => `
-        <div class="nearby__gear-item">
-          <img src="${item.img}" alt="${item.name}" loading="lazy" width="80" height="80" />
-          <div class="nearby__gear-info">
-            <h4>${item.name}</h4>
-            <p>${item.desc}</p>
-            <span class="badge badge--rent">${item.type}</span>
-            <div class="price">${item.price}</div>
-          </div>
-        </div>
-      `).join('');
-
-      gearContainer.innerHTML = html;
-      document.querySelector('.nearby')?.scrollIntoView({ behavior: 'smooth' });
-    });
-  });
-}
-
-/* ============================================================
-   REVIEWS CAROUSEL
-   ============================================================ */
-
-function initCarousel() {
-  const track = $('.carousel-track');
-  const slides = $$('.review-slide');
-  const prevBtn = $('.carousel-btn.prev');
-  const nextBtn = $('.carousel-btn.next');
-  const dotsContainer = $('.carousel-dots');
-
-  if (!track || !slides.length) return;
-
-  let current = 0;
-  const total = slides.length;
-
-  /** Build dot indicators */
-  function buildDots() {
-    if (!dotsContainer) return;
-    dotsContainer.innerHTML = '';
-    slides.forEach((_, i) => {
-      const dot = document.createElement('button');
-      dot.className = 'carousel-dot' + (i === 0 ? ' active' : '');
-      dot.setAttribute('aria-label', `Go to review ${i + 1}`);
-      dot.addEventListener('click', () => goTo(i));
-      dotsContainer.appendChild(dot);
-    });
-  }
-
-  function updateDots() {
-    $$('.carousel-dot', dotsContainer).forEach((dot, i) => {
-      dot.classList.toggle('active', i === current);
-    });
-  }
-
-  /** Move to a specific slide index */
-  function goTo(index) {
-    current = (index + total) % total;
-    track.style.transform = `translateX(-${current * 100}%)`;
-    updateDots();
-  }
-
-  if (prevBtn) prevBtn.addEventListener('click', () => goTo(current - 1));
-  if (nextBtn) nextBtn.addEventListener('click', () => goTo(current + 1));
-
-  // Auto-advance every 5 s
-  let autoTimer = setInterval(() => goTo(current + 1), 5000);
-
-  // Pause on hover
-  const wrapper = $('.carousel-wrapper');
-  if (wrapper) {
-    wrapper.addEventListener('mouseenter', () => clearInterval(autoTimer));
-    wrapper.addEventListener('mouseleave', () => {
-      autoTimer = setInterval(() => goTo(current + 1), 5000);
-    });
-  }
-
-  buildDots();
 }
 
 /* ============================================================
@@ -475,8 +347,8 @@ function initContactForm() {
   form.addEventListener('submit', (e) => {
     e.preventDefault();
 
-    const name = $('#name')?.value.trim();
-    const email = $('#email')?.value.trim();
+    const name    = $('#name')?.value.trim();
+    const email   = $('#email')?.value.trim();
     const message = $('#message')?.value.trim();
     const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
@@ -495,33 +367,15 @@ function initContactForm() {
 }
 
 /* ============================================================
-   CLICKABLE CARDS
+   ADD TO CART (gear page inline onclick buttons)
    ============================================================ */
 
-function initClickableCards() {
-  $$('.card--clickable').forEach(card => {
-    card.addEventListener('click', function () {
-      const href = this.dataset.href;
-      if (href) window.location.href = href;
-    });
-  });
-}
-
-/* ============================================================
-   SMOOTH SCROLL (anchor links)
-   ============================================================ */
-
-function initSmoothScroll() {
-  $$('a[href^="#"]').forEach(anchor => {
-    anchor.addEventListener('click', function (e) {
-      const target = $(this.getAttribute('href'));
-      if (target) {
-        e.preventDefault();
-        target.scrollIntoView({ behavior: 'smooth' });
-      }
-    });
-  });
-}
+window.addToCart = function (e, btn) {
+  if (e) e.stopPropagation();
+  const body  = btn.closest('.gear-card__info') || btn.closest('.card__body');
+  const title = body?.querySelector('h2, h3, h4')?.innerText || 'Item';
+  showToast(`${title} added to cart! `, 'success');
+};
 
 /* ============================================================
    CAMPSITE MODAL
@@ -531,106 +385,261 @@ function initSmoothScroll() {
 const DETAILED_CAMPSITE_DATA = {
   'great-western': {
     name: 'Great Western Mountain',
-    location: 'Nuwara Eliya',
+    location: 'Nuwara Eliya, Sri Lanka',
     image: 'images/distict/Nuwara Eliya/Great Western Mountain.jpg',
-    description: 'The 8th highest mountain in Sri Lanka. Its trail is ranked as difficult due to its steep incline and difficult, unclear path. A rewarding challenge for experienced hikers.',
+    category: 'Mountain',
+    difficulty: 'Hard',
+    rating: 4.7,
+    reviews: 220,
+    elevation: '2,212 m',
     season: 'Jan – Mar',
     weather: 'Chilly (12°C – 16°C)',
+    mapsUrl: 'https://maps.google.com/?q=Great+Western+Mountain+Nuwara+Eliya+Sri+Lanka',
+    phone: '+94112345678',
+    description: 'The 8th highest mountain in Sri Lanka. Its trail is ranked as difficult due to its steep incline and unclear path. A rewarding challenge for experienced hikers with breathtaking panoramic views from the summit.',
     safety: [
-      'Trail can be slippery and unclear; a local guide is recommended.',
-      'Carry adequate warm clothing for the night.',
-      'Bring plenty of water as there are limited sources near the top.'
-    ],
-    gear: [
-      { name: 'Thermal Sleeping Bag', category: 'Sleeping Bags', store: 'Nuwara Eliya Camp Store', image: 'images/Gear/Thermal Sleeping Bag.jpg', avail: 'In Stock' },
-      { name: '4-Person Dome Tent', category: 'Tents', store: 'Nuwara Eliya Camp Store', image: 'images/Gear/4-Person Dome Tent.jpg', avail: 'Limited' }
+      'Trail can be slippery and unclear — a local guide is strongly recommended.',
+      'Carry adequate warm clothing; temperatures drop sharply at night.',
+      'Bring sufficient water as sources are limited near the top.',
+      'Start early to avoid afternoon mist and ensure daylight for descent.'
     ]
+    
   },
   'bambaragala': {
     name: 'Bambaragala',
-    location: 'Badulla',
+    location: 'Badulla, Sri Lanka',
     image: 'images/distict/Badulla/bambaragala.jpg',
-    description: 'A scenic mountain surrounded by forests and tea estates. The trail features steep sections and rewarding panoramic views, making it suitable for hikers with moderate experience.',
+    category: 'Mountain',
+    difficulty: 'Hard',
+    rating: 4.8,
+    reviews: 218,
+    elevation: '609 m',
     season: 'Jan – Apr',
     weather: 'Cool (16°C – 22°C)',
+    mapsUrl: 'https://maps.google.com/?q=Bambaragala+Badulla+Sri+Lanka',
+    phone: '+94552222345',
+    description: 'A scenic mountain surrounded by forests and tea estates. The trail features steep sections and rewarding panoramic views, making it suitable for hikers with moderate to high experience.',
     safety: [
       'Wear hiking shoes with good grip, especially after rain.',
-      'Carry sufficient drinking water and snacks.',
-      '•	Start early to avoid afternoon mist and rain.'
-    ],
-    gear: [
-      { name: 'LED Camping Lantern', category: 'Lighting', store: 'Badulla Outdoor Rentals', image: 'images/Gear/LED Camping Lantern.jpg', avail: 'In Stock' },
-      { name: 'Foldable Camping Chair', category: 'Furniture', store: 'Badulla Outdoor Rentals', image: 'images/Gear/Foldable Camping Chair.jpg', avail: 'In Stock' }
+      'Carry sufficient drinking water and energy snacks.',
+      'Start early to avoid afternoon mist and rain.',
+      'Inform someone of your planned route and return time.'
     ]
   },
   'narangala': {
     name: 'Narangala Mountain',
-    location: 'Badulla',
+    location: 'Badulla, Sri Lanka',
     image: 'images/distict/Badulla/Narangala Mountain.jpg',
-    description: 'One of Sri Lanka\'s most popular camping mountains. The trail includes rocky climbs and spectacular sunrise views over the surrounding valleys',
+    category: 'Mountain',
+    difficulty: 'Easy',
+    rating: 4.9,
+    reviews: 456,
+    elevation: '1,530 m',
     season: 'Jan – Apr',
     weather: 'Cool (14°C – 20°C)',
+    mapsUrl: 'https://maps.google.com/?q=Narangala+Mountain+Badulla+Sri+Lanka',
+    phone: '+94552222345',
+    description: 'One of Sri Lanka\'s most popular camping mountains. The trail includes rocky climbs and spectacular 360° sunrise views over the surrounding valleys — a magical overnight camping experience.',
     safety: [
-      'Strong winds are common near the summit.',
-      'Camp only in designated areas.',
-      'Carry enough water as natural sources are limited.'
-    ],
-    gear: [
-      { name: '65L Trekking Backpack', category: 'Bags', store: 'Badulla Outdoor Rentals', image: 'images/Gear/65L Trekking Backpack.jpg', avail: 'In Stock' },
-      { name: 'Portable Gas Stove', category: 'Cooking', store: 'Badulla Outdoor Rentals', image: 'images/Gear/Portable Gas Stove.jpg', avail: 'Limited' }
+      'Strong winds are common near the summit — secure your tent.',
+      'Camp only in designated areas to preserve the environment.',
+      'Carry enough water as natural sources are limited on the summit.',
+      'Bring a quality sleeping bag as nights can be cold.'
     ]
   },
   'haritha-kanda': {
     name: 'Haritha Kanda',
-    location: 'Nuwara Eliya',
-    image: 'images/distict/Badulla/haritha kanda.jpg',
-    description: 'A peaceful mountain known for its lush forests and camping opportunities. The hike is moderately difficult with beautiful sunrise viewpoints and rich biodiversity. ',
+    location: 'Nuwara Eliya, Sri Lanka',
+    image: 'images/distict/Nuwara Eliya/haritha kanda.jpg',
+    category: 'Mountain',
+    difficulty: 'Moderate',
+    rating: 4.9,
+    reviews: 342,
+    elevation: '1,050 m',
     season: 'Dec – Mar',
     weather: 'Cool (14°C – 20°C)',
+    mapsUrl: 'https://maps.google.com/?q=Haritha+Kanda+Nuwara+Eliya+Sri+Lanka',
+    phone: '+94522233456',
+    description: 'A peaceful mountain known for its lush forests and excellent camping opportunities. The hike offers beautiful sunrise viewpoints and rich biodiversity including endemic birds and flora.',
     safety: [
-      'Leeches are common during wet weather.wear leech socks.',
+      'Leeches are common during wet weather — wear leech socks.',
       'Bring warm clothing for overnight camping.',
-      'Avoid hiking alone and inform someone of your route.'
-    ],
-    gear: [
-      { name: '4-Person Dome Tent', category: 'Tents', store: 'Badulla Outdoor Rentals', image: 'images/Gear/4-Person Dome Tent.jpg', avail: 'In Stock' }
+      'Avoid hiking alone; inform someone of your route.',
+      'Watch your step on muddy sections after rain.'
     ]
   },
   'hanthana': {
     name: 'Hanthana',
-    location: 'Kandy',
+    location: 'Kandy, Sri Lanka',
     image: 'images/distict/kandy/Hanthana.jpg',
-    description: 'A mountain range famous for its rolling hills, tea plantations, and scenic hiking trails. Suitable for beginners and experienced hikers alike.',
+    category: 'Mountain',
+    difficulty: 'Moderate',
+    rating: 4.7,
+    reviews: 450,
+    elevation: '1,240 m',
     season: 'Jan – Mar',
     weather: 'Mild (18°C – 24°C)',
+    mapsUrl: 'https://maps.google.com/?q=Hanthana+Mountain+Kandy+Sri+Lanka',
+    phone: '+94812233456',
+    description: 'A mountain range famous for its rolling hills, tea plantations, and scenic hiking trails. Suitable for beginners and experienced hikers alike, with multiple trails offering diverse views.',
     safety: [
-      'Weather changes quickly; carry a light rain jacket.',
+      'Weather changes quickly — carry a light rain jacket.',
       'Stay on marked trails to avoid getting lost.',
-      'Wear proper hiking shoes for steep sections. '
-    ],
-    gear: [
-      { name: 'Thermal Sleeping Bag', category: 'Sleeping Bags', store: 'Kandy Gear Hub', image: 'images/Gear/Thermal Sleeping Bag.jpg', avail: 'In Stock' },
-      { name: 'Foldable Camping Chair', category: 'Furniture', store: 'Kandy Gear Hub', image: 'images/Gear/Foldable Camping Chair.jpg', avail: 'In Stock' }
+      'Wear proper hiking shoes for steep sections.',
+      'Carry enough water as streams may be dry in peak season.'
     ]
   },
   'meemure': {
     name: 'Meemure Village',
-    location: 'Kandy',
+    location: 'Kandy, Sri Lanka',
     image: 'images/distict/kandy/meemure.webp',
-    description: 'A remote mountain village surrounded by the Knuckles Range. Popular for trekking, waterfalls, camping, and experiencing traditional village life.',
+    category: 'Forest',
+    difficulty: 'Hard',
+    rating: 4.0,
+    reviews: 120,
+    elevation: '350 m',
     season: 'Jan – Mar',
     weather: 'Cool (16°C – 24°C)',
+    mapsUrl: 'https://maps.google.com/?q=Meemure+Village+Kandy+Sri+Lanka',
+    phone: '+94812233456',
+    description: 'A remote mountain village surrounded by the Knuckles Range. Popular for trekking, waterfalls, camping, and experiencing authentic traditional village life far from urban noise.',
     safety: [
-      'Mobile network coverage is limited.',
-      'Travel in a 4WD vehicle where possible.',
-      'Carry emergency supplies and enough drinking water'
-    ],
-    gear: [
-      { name: 'LED Camping Lantern', category: 'Lighting', store: 'Kandy Gear Hub', image: 'images/Gear/LED Camping Lantern.jpg', avail: 'In Stock' },
-      { name: 'Portable Gas Stove', category: 'Cooking', store: 'Kandy Gear Hub', image: 'images/Gear/Portable Gas Stove.jpg', avail: 'Limited' }
+      'Mobile network coverage is very limited in this area.',
+      'Travel in a 4WD vehicle where possible — roads are rough.',
+      'Carry emergency supplies and sufficient drinking water.',
+      'Let someone know your itinerary before departure.'
+    ]
+  },
+  'alagalla': {
+    name: 'Alagalla Mountain Range',
+    location: 'Kegalle, Sri Lanka',
+    image: 'images/distict/Kegalle/A_view_from_Alagalla_Mountain_Range.jpg',
+    category: 'Mountain',
+    difficulty: 'Moderate',
+    rating: 3.5,
+    reviews: 100,
+    elevation: '1,140 m',
+    season: 'Jan – Mar',
+    weather: 'Tropical (24°C – 30°C)',
+    mapsUrl: 'https://maps.google.com/?q=Alagalla+Mountain+Kegalle+Sri+Lanka',
+    phone: '+94352244567',
+    description: 'A historic rock fortress mountain offering panoramic summit views, famous for its treacherous railway history and tea estates. A natural defense outpost for the ancient Kandyan Kingdom.',
+    safety: [
+      'The trail has some exposed rocky sections — take care near edges.',
+      'Avoid hiking during or after heavy rain.',
+      'Carry enough water — no reliable sources on the trail.',
+      'Use sunscreen and a hat as sections are exposed to direct sun.'
+    ]
+  },
+  'baththalangunduwa': {
+    name: 'Baththalangunduwa',
+    location: 'Puttalam, Sri Lanka',
+    image: 'images/distict/Puttalam/Baththalangunduwa.jpg',
+    category: 'Beach',
+    difficulty: 'Moderate',
+    rating: 4.5,
+    reviews: 245,
+    elevation: '0 – 2 m',
+    season: 'Jan – Sep',
+    weather: 'Hot (28°C – 34°C)',
+    mapsUrl: 'https://maps.google.com/?q=Baththalangunduwa+Kalpitiya+Sri+Lanka',
+    phone: '+94322255678',
+    description: 'A remote, narrow fisherman\'s island accessible only by boat from Kalpitiya. An untouched paradise with pristine sandy beaches, isolated fishing villages, and spectacular starlit night camping right on the shore.',
+    safety: [
+      'Only accessible by boat — arrange transport in advance.',
+      'No medical facilities on the island; carry a first aid kit.',
+      'Be aware of tides and sea conditions before swimming.',
+      'Protect against mosquitoes especially at dusk and dawn.'
+    ]
+  },
+  'knuckles-base': {
+    name: 'Knuckles Base',
+    location: 'Matale, Sri Lanka',
+    image: 'images/distict/Matale/Knuckles_Range.jpg',
+    category: 'Mountain',
+    difficulty: 'Hard',
+    rating: 4.4,
+    reviews: 105,
+    elevation: '1,863 m',
+    season: 'Jan – Mar',
+    weather: 'Cool (14°C – 22°C)',
+    mapsUrl: 'https://maps.google.com/?q=Knuckles+Mountain+Range+Matale+Sri+Lanka',
+    phone: '+94662266789',
+    description: 'The gateway to the Knuckles Mountain Range, a UNESCO World Heritage Conservation Forest. It offers diverse trekking routes through lush forests, waterfalls, and mountain peaks with exceptional biodiversity.',
+    safety: [
+      'A permit is required to enter the Knuckles Conservation Forest.',
+      'Hire a registered guide — trails can be confusing.',
+      'Carry waterproof gear as mist and rain are frequent.',
+      'Do not disturb wildlife; this is a protected conservation area.'
     ]
   }
 };
+
+const NEARBY_GEAR_DB = [
+  {
+    id: 'tent-4',
+    title: '4-Person Dome Tent',
+    image: 'images/Gear/4-Person Dome Tent.jpg',
+    subtext: 'Tents • Badulla Outdoor Rentals',
+    phone: '+94552222345',
+    mapsUrl: 'https://maps.google.com/?q=Badulla+Outdoor+Rentals',
+    district: 'badulla'
+  },
+  {
+    id: 'thermal-sleeping-bag',
+    title: 'Thermal Sleeping Bag',
+    image: 'images/Gear/Thermal Sleeping Bag.jpg',
+    subtext: 'Sleeping Bags • Nuwara Eliya Camp Store',
+    phone: '+94522233456',
+    mapsUrl: 'https://maps.google.com/?q=Nuwara+Eliya+Camp+Store',
+    district: 'nuwara-eliya'
+  },
+  {
+    id: 'sleeping-pad',
+    title: 'Sleeping Pad',
+    image: 'images/Gear/Sleeping Pad.jpg',
+    subtext: 'Sleeping Gear • Nuwara Eliya Camp Store',
+    phone: '+94522233456',
+    mapsUrl: 'https://maps.google.com/?q=Nuwara+Eliya+Camp+Store',
+    district: 'nuwara-eliya'
+  },
+  {
+    id: 'lantern',
+    title: 'LED Camping Lantern',
+    image: 'images/Gear/LED Camping Lantern.jpg',
+    subtext: 'Lighting • Kandy Adventure Gear',
+    phone: '+94812233456',
+    mapsUrl: 'https://maps.google.com/?q=Kandy+Adventure+Gear',
+    district: 'kandy'
+  },
+  {
+    id: 'stove',
+    title: 'Portable Gas Stove',
+    image: 'images/Gear/Portable Gas Stove.jpg',
+    subtext: 'Cooking • Kandy Adventure Gear',
+    phone: '+94812233456',
+    mapsUrl: 'https://maps.google.com/?q=Kandy+Adventure+Gear',
+    district: 'kandy'
+  },
+  {
+    id: 'tent-matale',
+    title: '4-Person Dome Tent',
+    image: 'images/Gear/4-Person Dome Tent.jpg',
+    subtext: 'Tents • Matale Camping Hub',
+    phone: '+94662266789',
+    mapsUrl: 'https://maps.google.com/?q=Matale+Camping+Hub',
+    district: 'matale'
+  },
+  {
+    id: 'first-aid',
+    title: 'First Aid Kit',
+    image: 'images/Gear/first aid.jpg',
+    subtext: 'Safety • Islandwide Shipping',
+    phone: '+94112345678',
+    mapsUrl: 'https://maps.google.com/?q=Colombo',
+    district: 'all'
+  }
+];
 
 /**
  * Open the campsite detail modal
@@ -640,50 +649,106 @@ window.openCampsiteModal = function (campId) {
   const data = DETAILED_CAMPSITE_DATA[campId];
   if (!data) return;
 
-  const modal = $('#campsiteModal');
+  const modal     = $('#campsiteModal');
   const modalBody = $('#modalBody');
-
   if (!modal || !modalBody) return;
 
+  const stars = '★'.repeat(Math.round(data.rating)) + '☆'.repeat(5 - Math.round(data.rating));
   const safetyHtml = data.safety.map(item => `<li>${item}</li>`).join('');
 
-  const gearHtml = data.gear.map(item => `
-    <div class="modal-gear-item">
-      <img src="${item.image}" alt="${item.name}" class="modal-gear-img" loading="lazy" width="60" height="60">
-      <div class="modal-gear-info">
-        <h4>${item.name} <span class="badge badge--rent" style="font-size:0.7rem;position:static;padding:2px 6px;">${item.avail}</span></h4>
-        <p>${item.category} • ${item.store}</p>
-      </div>
-      <button class="btn btn--primary" onclick="addToCart(event, this)" aria-label="Add ${item.name} to cart">Add to Cart</button>
-    </div>
-  `).join('');
+  // Generate nearby gear based on district
+  const districtKey = CAMPSITE_DATA.find(c => c.id === campId)?.district || 'all';
+  const nearbyGear = NEARBY_GEAR_DB.filter(g => g.district === districtKey || g.district === 'all').slice(0, 2);
+  let gearHtml = '';
+  
+  if (nearbyGear.length > 0) {
+    const gearItems = nearbyGear.map(gear => {
+      return `
+        <div style="border: 1px solid var(--color-border); border-radius: 10px; padding: 0.75rem; display: flex; align-items: center; gap: 1rem; background: var(--color-bg); margin-bottom: 1rem;">
+          <img src="${gear.image}" alt="${gear.title}" style="width: 60px; height: 60px; border-radius: 8px; object-fit: cover; flex-shrink: 0;" />
+          <div style="flex: 1;">
+            <div style="display:flex; align-items:center; gap:0.5rem; margin-bottom:0.2rem;">
+              <h4 style="color: var(--color-primary); font-weight: 700; font-size: 0.95rem; margin: 0;">${gear.title}</h4>
+            </div>
+            <p style="color: var(--color-text-light); font-size: 0.85rem; margin: 0;">${gear.subtext}</p>
+          </div>
+          <div style="display: flex; gap: 0.5rem; flex-shrink: 0; flex-direction: column;">
+            <a href="tel:${gear.phone}" class="btn btn--primary" style="padding: 0.35rem 1rem; font-size: 0.8rem; border-radius: 20px;">Call</a>
+            <a href="${gear.mapsUrl}" target="_blank" class="btn btn--outline" style="padding: 0.35rem 1rem; font-size: 0.8rem; border-radius: 20px;">Location</a>
+          </div>
+        </div>
+      `;
+    }).join('');
+
+    gearHtml = `
+      <h3 class="modal-section-title" style="margin-top:2rem;">Nearby Gear</h3>
+      ${gearItems}
+    `;
+  }
 
   modalBody.innerHTML = `
     <div class="modal-grid">
       <div class="modal-left">
-        <img src="${data.image}" alt="${data.name}" class="modal-header-img" loading="lazy">
+        <img
+          src="${data.image}"
+          alt="${data.name} campsite"
+          class="modal-header-img"
+          loading="lazy"
+          width="460"
+          height="280"
+        >
         <h2 class="modal-title">${data.name}</h2>
         <div class="modal-meta">
           <span><i class="ph ph-map-pin" aria-hidden="true"></i> ${data.location}</span>
           <span><i class="ph ph-calendar-blank" aria-hidden="true"></i> ${data.season}</span>
           <span><i class="ph ph-thermometer" aria-hidden="true"></i> ${data.weather}</span>
+          <span><i class="ph ph-mountains" aria-hidden="true"></i> ${data.elevation}</span>
         </div>
         <p class="modal-desc">${data.description}</p>
+        <div class="modal-action-btns">
+          <a
+            href="${data.mapsUrl}"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="btn btn--primary"
+            aria-label="Open ${data.name} in Google Maps"
+          >
+            <i class="ph ph-map-pin" aria-hidden="true"></i> Location
+          </a>
+          <a
+            href="tel:${data.phone}"
+            class="btn btn--ghost"
+            aria-label="Call ${data.name} contact number"
+          >
+            <i class="ph ph-phone" aria-hidden="true"></i> Call
+          </a>
+        </div>
       </div>
       <div class="modal-right">
+        <div style="display:flex;align-items:center;gap:0.75rem;margin-bottom:1.5rem;">
+          <span style="font-size:1.3rem;color:#e8b84b;letter-spacing:2px;" aria-label="${data.rating} out of 5 stars">${stars}</span>
+          <span style="font-weight:700;color:#fff;font-size:1.1rem;">${data.rating}</span>
+          <span style="color:var(--color-text-light);font-size:0.9rem;">(${data.reviews} reviews)</span>
+        </div>
+        <div style="display:flex;gap:0.5rem;margin-bottom:1.5rem;flex-wrap:wrap;">
+          <span class="badge" style="position:static;background:rgba(82,197,137,0.15);color:var(--color-primary);border:1px solid rgba(82,197,137,0.3);">
+            <i class="ph ph-tag" aria-hidden="true"></i> ${data.category}
+          </span>
+          <span class="badge" style="position:static;background:rgba(255,255,255,0.05);color:var(--color-text-light);border:1px solid var(--color-border);">
+            <i class="ph ph-person-simple-walk" aria-hidden="true"></i> ${data.difficulty}
+          </span>
+        </div>
         <h3 class="modal-section-title">Safety Guidelines</h3>
         <ul class="modal-safety">${safetyHtml}</ul>
-        <h3 class="modal-section-title">Nearby Gear</h3>
-        <div class="modal-gear-list">${gearHtml}</div>
+        ${gearHtml}
       </div>
     </div>
   `;
 
   modal.classList.add('show');
   modal.setAttribute('aria-hidden', 'false');
-  // Trap focus inside modal
   modal.querySelector('.modal-close').focus();
-  document.body.classList.add('menu-open'); // reuse scroll lock
+  document.body.classList.add('menu-open');
 };
 
 /** Close the campsite detail modal */
@@ -697,24 +762,6 @@ window.closeCampsiteModal = function () {
 };
 
 /* ============================================================
-   GLOBAL ADD TO CART (kept as global for inline onclick attrs)
-   ============================================================ */
-
-window.addToCart = function (e, btn) {
-  if (e) e.stopPropagation();
-  const cardBody = btn.closest('.gear-card__info') || btn.closest('.card__body') || btn.closest('.modal-gear-info');
-  const title = cardBody?.querySelector('h3, h4')?.innerText || 'Item';
-  showToast(`${title} added to cart! 🎒`, 'success');
-};
-
-window.selectCampsite = function (e, btn) {
-  if (e) e.stopPropagation();
-  const cardBody = btn.closest('.card__body');
-  const title = cardBody?.querySelector('h3')?.innerText || 'Campsite';
-  showToast(`${title} selected!`, 'success');
-};
-
-/* ============================================================
    MODAL BACKDROP CLICK + KEYBOARD CLOSE
    ============================================================ */
 
@@ -722,12 +769,10 @@ function initModalEvents() {
   const modal = $('#campsiteModal');
   if (!modal) return;
 
-  // Backdrop click
   modal.addEventListener('click', (e) => {
     if (e.target === modal) window.closeCampsiteModal();
   });
 
-  // Escape key
   document.addEventListener('keydown', (e) => {
     if (e.key === 'Escape' && modal.classList.contains('show')) {
       window.closeCampsiteModal();
@@ -751,7 +796,7 @@ function initScrollReveal() {
     });
   }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
 
-  $$('.camp-card, .gear-card, .card, .review-slide').forEach(el => {
+  $$('.camp-card, .gear-card, .card').forEach(el => {
     el.classList.add('reveal-on-scroll');
     observer.observe(el);
   });
@@ -765,11 +810,7 @@ document.addEventListener('DOMContentLoaded', () => {
   initNavigation();
   initHeroSearch();
   initCampsiteSearch();
-  initNearbyGear();
-  initCarousel();
   initContactForm();
-  initClickableCards();
-  initSmoothScroll();
   initModalEvents();
   initScrollReveal();
 });
